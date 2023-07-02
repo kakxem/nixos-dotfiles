@@ -25,7 +25,6 @@
       # Work
       vscode
       mongodb-compass
-      docker
       nodejs_18
       nodePackages.pnpm
     ];

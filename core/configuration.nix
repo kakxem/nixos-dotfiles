@@ -118,7 +118,6 @@
 
   # Enable "UnFree" packages
   nixpkgs.config.allowUnfree = true;
-  
   environment = {
     systemPackages = with pkgs; [
       git
@@ -160,6 +159,9 @@
 
   # Remove xterm
   services.xserver.excludePackages = [ pkgs.xterm ];
+
+  # Docker
+  virtualisation.docker.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
