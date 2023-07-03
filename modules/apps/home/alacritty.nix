@@ -2,8 +2,6 @@
 # Alacritty
 #
 
-{ pkgs, ... }:
-
 {
   programs = {
     alacritty = {

@@ -4,7 +4,7 @@
 # Dconf settings can be found by running "$ dconf watch /"
 #
 
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   home.packages = with pkgs; [

@@ -2,7 +2,7 @@
 #  General Home-manager configuration
 #
 
-{ config, lib, pkgs, unstable, user, ... }:
+{ pkgs, user, ... }:
 
 { 
   imports = [
