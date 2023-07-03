@@ -32,5 +32,11 @@
 
   programs = {
     home-manager.enable = true;
+    
+    git = {
+      enable = true;
+      userName = "kakxem";
+      userEmail = "paul.antonio.almasi@gmail.com";
+    };
   };
 }
