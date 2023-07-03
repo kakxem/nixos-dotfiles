@@ -21,8 +21,10 @@
       hexchat
       anki
       mpv
+      telegram-desktop
 
       # Work
+      distrobox
       vscode
       mongodb-compass
       nodejs_18
