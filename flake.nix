@@ -4,70 +4,50 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";                  # Change to stable if you want
 
-    nur = {                                                               # NUR Packages
-      url = "github:nix-community/NUR";                                   # Add "nur.nixosModules.nur" to the host modules
-    };
-
     home-manager = {                                                      # User Package Management
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    hyprland = {                                                          # Official Hyprland flake
-      url = "github:vaxerski/Hyprland";                                   # Add "hyprland.nixosModules.default" to the host modules
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, hyprland, nur }: 
+  outputs = inputs @ { self, nixpkgs, home-manager }: 
     let
-      # Editable
+      # These are values that are passed to the nixos flake
       user = "kakxem";
-      location = "$HOME/.setup";
-
-      # Don't touch
-      system = "x86_64-linux";                                  # System architecture
+      system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        config.allowUnfree = true;                              # Allow proprietary software
+        config.allowUnfree = true;
       };
-      lib = nixpkgs.lib;
     in
     {
       nixosConfigurations = {
-        kakxemConfig = lib.nixosSystem {                               # Desktop profile
+
+        # Main configuration
+        desktopConfig = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit inputs pkgs system user location;
-            host = {
-              hostName = "desktop";
-              mainMonitor = "HDMI-A-1";
-            };
-          };                                                      # Pass flake variable
+            inherit pkgs user;
+          };
 
-          modules = [                                             # Modules that are used.
-            nur.nixosModules.nur
+          modules = [
+            # Import configuration
             ./core/configuration.nix
 
-            home-manager.nixosModules.home-manager {              # Home-Manager module that is used.
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
+            # Home Manager
+            home-manager.nixosModules.home-manager {             
               home-manager.extraSpecialArgs = {
                 inherit pkgs user;
-                host = {
-                  hostName = "desktop";
-                  mainMonitor = "HDMI-A-1";
-                };
-              };                                                  # Pass flake variable
-
-              home-manager.users.${user} = {
-                imports = [
-                  ./core/home.nix
-                ];
               };
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+
+              home-manager.users.${user} = import ./core/home.nix;
             }
           ];
         };
+        # End of main configuration
+
       };
     };
 }
