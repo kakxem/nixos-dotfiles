@@ -49,6 +49,11 @@
       yelp
       gnome-contacts
       gnome-initial-setup
+      gnome-music
+      gnome-calendar
+      gnome-maps
+      simple-scan
+      cheese
     ]);
   };
 

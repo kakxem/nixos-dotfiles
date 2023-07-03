@@ -31,6 +31,7 @@
       ];
     };
 
+    # Apps and system settings
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
       enable-hot-corners = true;
@@ -48,6 +49,12 @@
     };
     "org/gnome/settings-daemon/plugins/power" = {
       sleep-inactive-ac-type = "nothing";
+    };
+    "org/gnome/nautilus/preferences" = {
+      click-policy = "single";
+      search-view = "list-view";
+      show-create-link = true;
+      show-delete-permanently = true;
     };
 
     # Keybindings
@@ -77,7 +84,6 @@
       search = false;
       workspace-switcher-size = 13;
     };
-
     "org/gnome/shell/extensions/pop-shell" = {
       tile-by-default = true;
       stacking-with-mouse = false;
