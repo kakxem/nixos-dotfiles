@@ -7,7 +7,7 @@
 { 
   imports = [
     ../modules/desktops/gnome/home.nix
-    (import ../modules/apps/home/default.nix)
+    ../modules/apps/home
   ];
 
   home = {

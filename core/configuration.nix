@@ -4,11 +4,12 @@
 
 { config, pkgs, lib, user, ... }:
 
-{
-  imports =
-    [(import ./hardware-configuration.nix)] ++
-    [(import ../modules/desktops/gnome/default.nix)] ++ # Window Manager
-    [(import ../modules/apps/core/default.nix)];
+{  
+  imports = [
+    ./hardware-configuration.nix
+    ../modules/desktops/gnome
+    ../modules/apps/core
+  ];
 
   # Nix config
   nix = {
