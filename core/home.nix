@@ -25,7 +25,6 @@
 
       # Work
       distrobox
-      vscode
       mongodb-compass
       nodejs_18
       nodePackages.pnpm
