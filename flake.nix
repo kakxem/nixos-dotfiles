@@ -8,9 +8,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager }: 
+  outputs = inputs @ { self, nixpkgs, home-manager, hyprland }: 
     let
       # These are values that are passed to the nixos flake
       user = "kakxem";
@@ -37,7 +39,7 @@
             # Home Manager
             home-manager.nixosModules.home-manager {             
               home-manager.extraSpecialArgs = {
-                inherit pkgs user;
+                inherit pkgs user hyprland;
               };
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;

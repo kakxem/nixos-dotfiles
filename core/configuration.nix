@@ -7,7 +7,8 @@
 {  
   imports = [
     ./hardware-configuration.nix
-    ../modules/desktops/gnome
+    #../modules/desktops/gnome         # GNOME
+    ../modules/desktops/hyprland      # HYPRLAND
     ../modules/apps/core
   ];
 
@@ -16,6 +17,10 @@
     settings ={
       auto-optimise-store = true;                            # Optimise syslinks
       experimental-features = [ "nix-command" "flakes" ];    # ** Flakes **
+      
+      # Hyprland cachix
+      substituters = ["https://hyprland.cachix.org"];
+      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
     gc = {                                  # Automatic garbage collection
       automatic = true;
@@ -104,7 +109,7 @@
 
   # Enable fish (I'll be used for root user)
   programs.fish.enable = true;
-  
+
   # User configs
   users.users.${user} = {
     isNormalUser = true;
@@ -123,9 +128,6 @@
     systemPackages = with pkgs; [
       git
       neovim
-      xclip
-      xorg.xlsclients
-      alacritty
       adw-gtk3
       libsForQt5.qt5ct
       linuxKernel.packages.linux_zen.xone
