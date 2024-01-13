@@ -52,8 +52,6 @@ in
       swappy
       wl-clipboard
       wlr-randr
-      xdg-desktop-portal
-      xdg-desktop-portal-gtk
       xdg-desktop-portal-hyprland
       wofi
       hyprpaper

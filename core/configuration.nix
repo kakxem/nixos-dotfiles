@@ -9,7 +9,7 @@
     ./hardware-configuration.nix
     #../modules/desktops/gnome         # GNOME
     ../modules/desktops/hyprland      # HYPRLAND
-    ../modules/desktops/kde
+    #../modules/desktops/kde
     ../modules/apps/core
   ];
 
@@ -81,6 +81,8 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      wireplumber.enable = true;
+      audio.enable = true;
     };
 
     flatpak.enable = true;                # Flatpak
@@ -120,7 +122,7 @@
   };
 
   # Security
-  #security.rtkit.enable = true;
+  security.rtkit.enable = true;
   #security.polkit.enable = true;
   programs.gnupg.agent = {
      enable = true;
