@@ -43,6 +43,9 @@ in
       GBM_BACKEND = "nvidia-drm";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
       WLR_NO_HARDWARE_CURSORS = "1";
+
+      # QT Theme
+      QT_QPA_PLATFORMTHEME = "qt5ct";
     };
    
 
@@ -55,15 +58,17 @@ in
       xdg-desktop-portal-hyprland
       wofi
       hyprpaper
-      gnome.nautilus
       gnome-text-editor
       gnome.eog
+      libsForQt5.dolphin
 
       # Themes
-      glib
       configure-gtk
-      adw-gtk3
       nwg-look
+      adw-gtk3
+      libsForQt5.qt5ct
+      libsForQt5.breeze-qt5
+      libsForQt5.breeze-icons
     ];
   };
 
@@ -97,4 +102,14 @@ in
       waybar = hyprland.packages.${system}.waybar-hyprland;
     })
   ];
+
+  # QT theme
+  nixpkgs.config.qt5 = {
+    enable = true;
+    platformTheme = "qt5ct";
+    style = {
+      package = pkgs.libsForQt5.breeze-qt5;
+      name = "Breeze";
+    };
+  };
 }
