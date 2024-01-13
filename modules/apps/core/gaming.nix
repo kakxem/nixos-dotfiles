@@ -8,6 +8,7 @@
   environment.systemPackages = with pkgs; [
     lutris
     steam
+    wineWowPackages.base
   ];
 
   programs = {                                  # Needed to succesfully start Steam
