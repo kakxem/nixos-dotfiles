@@ -12,10 +12,6 @@
           bold = { style = "Bold"; };
           size = 27;
         };
-        offset = {                            # Positioning
-          x = -1;
-          y = 0;
-        };
         window.decorations = "none";
       };
     };

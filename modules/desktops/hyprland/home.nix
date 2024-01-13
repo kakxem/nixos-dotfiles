@@ -38,7 +38,6 @@ let
     # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
     input {
         kb_layout = us
-        kb_variant = dvorak
         kb_model =
         kb_options =
         kb_rules =
@@ -70,10 +69,6 @@ let
         # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
         rounding = 10
-        blur = yes
-        blur_size = 3
-        blur_passes = 1
-        blur_new_optimizations = true
 
         drop_shadow = yes
         shadow_range = 4
@@ -189,6 +184,9 @@ let
 
     # Screenshot
     bind=,print,exec,grim -g "$(slurp)" - | swappy -f - -o ~/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png && notify-send "Saved to ~/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png"
+
+    # GTK Theme config
+    exec-once = configure-gtk
   '';
 
   hyprpaperConf = ''

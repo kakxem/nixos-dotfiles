@@ -88,7 +88,7 @@
   };
 
   # Configure console keymap (tty)
-  console.keyMap = "dvorak";
+  # console.keyMap = "dvorak";
 
   # Time zone & internationalisation
   time.timeZone = "Europe/Madrid";
@@ -115,12 +115,18 @@
     isNormalUser = true;
     description = user;
     extraGroups = [ "networkmanager" "wheel" "docker"];
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
   };
 
   # Security
   #security.rtkit.enable = true;
   #security.polkit.enable = true;
+  programs.gnupg.agent = {
+     enable = true;
+     enableSSHSupport = true;
+     pinentryFlavor = "curses";
+  };
+  services.pcscd.enable = true;
 
   # Enable "UnFree" packages
   nixpkgs.config.allowUnfree = true;
@@ -128,8 +134,6 @@
     systemPackages = with pkgs; [
       git
       neovim
-      adw-gtk3
-      libsForQt5.qt5ct
       linuxKernel.packages.linux_zen.xone
     ];
 
@@ -144,21 +148,15 @@
       LIBVA_MESSAGING_LEVEL = "1";
     };
 
-    variables = lib.mkForce {
-      QT_QPA_PLATFORMTHEME="qt5ct";     # Set QT theme
-    };
   };
 
   # Fonts
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ 
       "FiraCode" 
       #"CascadiaCode"
      ]; })
   ];
-
-   # Additional config for theme
-  qt.platformTheme = "qt5ct";          
 
   # Remove xterm
   services.xserver.excludePackages = [ pkgs.xterm ];

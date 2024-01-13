@@ -20,19 +20,15 @@
       firefox
       _1password-gui
       hexchat
-      anki
       mpv
       telegram-desktop
       xclip
       xorg.xlsclients
       alacritty
-      discord
+      vesktop
 
       # Work
       distrobox
-      mongodb-compass
-      nodejs_18
-      nodePackages.pnpm
     ];
   };
 
@@ -42,7 +38,13 @@
     git = {
       enable = true;
       userName = "kakxem";
-      userEmail = "paul.antonio.almasi@gmail.com";
+      userEmail = "80788785+kakxem@users.noreply.github.com";
+      
+      extraConfig = {
+        commit.gpgsign = true;
+      };
+      signing.key = "0xF3F43B339BE91890";
     };
   };
+
 }
