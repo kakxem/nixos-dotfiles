@@ -47,7 +47,7 @@ let
         accel_profile = flat
 
         touchpad {
-            natural_scroll = yes
+	          natural_scroll = yes
         }
 
         sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
@@ -116,6 +116,7 @@ let
     binds {
         allow_workspace_cycles = true
         workspace_back_and_forth = true
+        scroll_event_delay = 100
     }
 
     misc {
@@ -134,13 +135,13 @@ let
 
     # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
     bind = $mainMod, return, exec, alacritty
-    bind = $mainMod, C, killactive 
-    bind = $mainMod, M, exit
+    bind = $mainMod, L, killactive
+    bind = $mainMod, F6, exit
     bind = $mainMod, E, exec, nautilus --new-window
     bind = $mainMod, V, togglefloating
     bind = $mainMod, F, fullscreen
-    bind = $mainMod, R, exec, wofi --show drun
-    bind = SUPER, W, exec, firefox
+    bind = CTRL, SPACE, exec, wofi --show drun
+    bind = $mainMod, W, exec, firefox
     bind = $mainMod, P, pseudo # dwindle
     bind = $mainMod, J, togglesplit # dwindle
 
@@ -174,7 +175,7 @@ let
     bind = $mainMod SHIFT, 9, movetoworkspace, 9
     bind = $mainMod SHIFT, 0, movetoworkspace, 10
 
-    # Scroll through existing workspaces with mainMod + scroll
+    # Scroll through existing workspaces with mainMod + scroll (Only if one workspace is at right/left)
     bind = $mainMod, mouse_down, exec, bash /etc/nixos/modules/scripts/scroll-workspace.sh down
     bind = $mainMod, mouse_up, exec, bash /etc/nixos/modules/scripts/scroll-workspace.sh up
 
@@ -187,6 +188,19 @@ let
 
     # GTK Theme config
     exec-once = configure-gtk
+
+    # Volume and Media Control
+    bind = , XF86AudioRaiseVolume, exec, pamixer -i 5
+    bind = , XF86AudioLowerVolume, exec, pamixer -d 5
+    bind = , XF86AudioMicMute, exec, pamixer --default-source -m
+    bind = , XF86AudioMute, exec, pamixer -t
+    bind = , XF86AudioPlay, exec, playerctl play-pause
+    bind = , XF86AudioPause, exec, playerctl play-pause
+    bind = , XF86AudioNext, exec, playerctl next
+    bind = , XF86AudioPrev, exec, playerctl previous
+
+    # Hyprland screenshare
+    exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
   '';
 
   hyprpaperConf = ''
