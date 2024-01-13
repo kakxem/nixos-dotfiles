@@ -2,7 +2,7 @@
 # Core config of nixos
 #
 
-{ config, pkgs, lib, user, ... }:
+{ config, pkgs, lib, user, kde2nix, ... }:
 
 {  
   imports = [
@@ -10,6 +10,7 @@
     #../modules/desktops/gnome         # GNOME
     ../modules/desktops/hyprland      # HYPRLAND
     ../modules/apps/core
+    kde2nix.nixosModules.default
   ];
 
   # Nix config
@@ -85,6 +86,9 @@
     flatpak.enable = true;                # Flatpak
 
     xserver.videoDrivers = ["nvidia"];    # Nvidia drivers
+
+    # Plasma 6 (RC)
+    xserver.desktopManager.plasma6.enable = true;
   };
 
   # Configure console keymap (tty)

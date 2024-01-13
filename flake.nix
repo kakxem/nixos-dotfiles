@@ -1,5 +1,20 @@
 {
   description = "Kakxem nixos flake";
+  
+  # the nixConfig here only affects the flake itself, not the system configuration!
+  nixConfig = {
+    # override the default substituters
+    substituters = [
+      "https://cache.nixos.org"
+
+      # nix community's cache server
+      "https://nix-community.cachix.org"
+    ];
+    trusted-public-keys = [
+      # nix community's cache server public key
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";                  # Change to stable if you want
@@ -10,9 +25,11 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
+
+    kde2nix.url = "github:nix-community/kde2nix";
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, hyprland }: 
+  outputs = inputs @ { self, nixpkgs, home-manager, hyprland, kde2nix }: 
     let
       # These are values that are passed to the nixos flake
       user = "kakxem";
@@ -29,9 +46,9 @@
         desktopConfig = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit pkgs user;
+            inherit pkgs user kde2nix;
           };
-
+          
           modules = [
             # Import configuration
             ./core/configuration.nix
@@ -46,6 +63,10 @@
 
               home-manager.users.${user} = import ./core/home.nix;
             }
+
+            {
+	      nix.settings.trusted-users = [ user ];
+	    }
           ];
         };
         # End of main configuration
