@@ -9,6 +9,9 @@
     lutris
     steam
     wineWowPackages.base
+
+    # Tools
+    r2modman
   ];
 
   programs = {                                  # Needed to succesfully start Steam
