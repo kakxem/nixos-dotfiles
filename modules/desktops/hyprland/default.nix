@@ -63,6 +63,7 @@ in
       libsForQt5.dolphin
 
       # Themes
+      glib
       configure-gtk
       nwg-look
       adw-gtk3
