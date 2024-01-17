@@ -2,7 +2,7 @@
 #  Hyprland Home-manager configuration
 #
 
-{ pkgs, ... }:
+{ pkgs, hyprland, user, ... }:
 
 let
   hyprlandConf = ''
@@ -33,7 +33,8 @@ let
     # source = ~/.config/hypr/myColors.conf
 
     # Some default env vars.
-    env = XCURSOR_SIZE,24
+    env = XCURSOR_SIZE,24                            # Cursor size
+    env = QT_QPA_PLATFORMTHEME,qt5ct                 # QT theme
 
     # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
     input {
@@ -204,12 +205,62 @@ let
   '';
 
   hyprpaperConf = ''
-    preload = /etc/nixos/wallpapers/black.png
-    wallpaper = ,/etc/nixos/wallpapers/black.png
+    preload = /home/${user}/.config/nixos/wallpapers/black.png
+    wallpaper = ,/home/${user}/.config/nixos/wallpapers/black.png
   '';
 
 in
 {
-  xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
+  # Hyprland config
+  wayland.windowManager.hyprland = {
+    enable = true;
+    extraConfig = hyprlandConf;
+  };
   xdg.configFile."hypr/hyprpaper.conf".text = hyprpaperConf;
+
+  # Home packages
+  home.packages = with pkgs; [
+    # QT theme manager
+    libsForQt5.qt5ct
+    libsForQt5.breeze-qt5
+  ];
+
+  # Color schema
+  dconf = {
+    enable = true;
+    settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+    };
+  };
+
+  # GTK theme
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.adw-gtk3;
+      name = "adw-gtk3-dark";
+    };
+
+    iconTheme = {
+      package = pkgs.libsForQt5.breeze-icons;
+      name = "Adwaita";
+    };
+
+    font = {
+      name = "Sans";
+      size = 11;
+    };
+  };
+
+   # QT theme
+  nixpkgs.config.qt5 = {
+    enable = true;
+    platformTheme = "qt5ct";
+    style = {
+      package = pkgs.libsForQt5.breeze-qt5;
+      name = "Breeze";
+    };
+  };
 }
