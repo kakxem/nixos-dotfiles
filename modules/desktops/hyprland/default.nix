@@ -52,6 +52,7 @@
       layout = "us";                              # Keyboard layout
       displayManager.gdm.enable = true;           # Display Manager
     };
+    udisks2.enable = true;
   };
 
   xdg.portal = {                                  # Required for flatpak with window managers and for file browsing

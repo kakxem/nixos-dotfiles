@@ -225,6 +225,9 @@ in
     # QT theme manager
     libsForQt5.qt5ct
     libsForQt5.breeze-qt5
+
+    # USB mount
+    udiskie
   ];
 
   # Color schema
@@ -264,5 +267,10 @@ in
       package = pkgs.libsForQt5.breeze-qt5;
       name = "Breeze";
     };
+  };
+
+  # USB mount
+  services = {
+    udiskie.enable = true;
   };
 }
