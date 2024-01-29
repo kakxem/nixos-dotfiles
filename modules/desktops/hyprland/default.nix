@@ -34,6 +34,7 @@
       gnome.eog
       libsForQt5.dolphin
       libsForQt5.kate
+      libsForQt5.ark
     ];
   };
 
