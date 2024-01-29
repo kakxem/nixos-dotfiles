@@ -30,6 +30,8 @@
       wl-clipboard
       wlr-randr
       wofi
+      libnotify
+      swaynotificationcenter
       hyprpaper
       gnome.eog
       libsForQt5.dolphin

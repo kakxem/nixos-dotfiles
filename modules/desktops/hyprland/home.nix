@@ -30,6 +30,7 @@ let
     exec-once = firefox &
     exec-once = telegram-desktop &
     exec-once = vencorddesktop &
+    exec-once = swaync &
 
     # Source a file (multi-file configs)
     # source = ~/.config/hypr/myColors.conf
