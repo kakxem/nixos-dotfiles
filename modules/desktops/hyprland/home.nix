@@ -29,7 +29,7 @@ let
     exec-once = hyprpaper &
     exec-once = firefox &
     exec-once = telegram-desktop &
-    exec-once = vencorddesktop &
+    exec-once = vesktop &
     exec-once = swaync &
 
     # Source a file (multi-file configs)
