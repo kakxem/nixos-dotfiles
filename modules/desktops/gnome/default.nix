@@ -6,7 +6,6 @@
 
 {
   programs = {
-    zsh.enable = true;
     dconf.enable = true;
   };
 
@@ -15,7 +14,6 @@
       enable = true;
 
       layout = "us";                          # Keyboard layout
-      xkbVariant = "dvorak";
       xkbOptions = "eurosign:e";                  # €-sign
 
       displayManager.gdm.enable = true;           # Display Manager
@@ -33,12 +31,12 @@
       gnome.gnome-tweaks
       gnome.adwaita-icon-theme
       gnome.gnome-software
+      gnome-text-editor
     ];
 
     gnome.excludePackages = (with pkgs; [         # Gnome ignored packages
       gnome-tour
     ]) ++ (with pkgs.gnome; [
-      gedit
       epiphany
       geary
       gnome-characters

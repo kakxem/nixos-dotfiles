@@ -13,8 +13,9 @@
     gnomeExtensions.pop-shell  
     gnomeExtensions.just-perfection
     gnomeExtensions.middle-click-to-close-in-overview
+    adw-gtk3
   ];
-
+  
   dconf.settings = {
     "org/gnome/shell" = {
       favorite-apps = [
