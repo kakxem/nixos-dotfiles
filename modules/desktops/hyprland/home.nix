@@ -180,8 +180,8 @@ let
     bind = $mainMod SHIFT, 0, movetoworkspace, 10
 
     # Scroll through existing workspaces with mainMod + scroll (Only if one workspace is at right/left)
-    bind = $mainMod, mouse_down, exec, bash /etc/nixos/modules/scripts/scroll-workspace.sh down
-    bind = $mainMod, mouse_up, exec, bash /etc/nixos/modules/scripts/scroll-workspace.sh up
+    bind = $mainMod, mouse_down, exec, bash /home/${user}/.config/nixos/modules/scripts/scroll-workspace.sh down
+    bind = $mainMod, mouse_up, exec, bash /home/${user}/.config/nixos/modules/scripts/scroll-workspace.sh up
 
     # Move/resize windows with mainMod + LMB/RMB and dragging
     bindm = $mainMod, mouse:272, movewindow
