@@ -13,8 +13,10 @@
     xserver = {
       enable = true;
 
-      layout = "us";                          # Keyboard layout
-      xkbOptions = "eurosign:e";                  # €-sign
+      xkb = {
+        layout = "us";                          # Keyboard layout
+        options = "eurosign:e";                 # €-sign
+      };
 
       displayManager.gdm.enable = true;           # Display Manager
       desktopManager.gnome.enable = true;         # Window Manager
@@ -56,6 +58,5 @@
   };
 
   # Enable pipewire
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
 }
