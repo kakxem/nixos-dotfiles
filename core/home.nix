@@ -6,8 +6,8 @@
 
 { 
   imports = [
-    #../modules/desktops/gnome/home.nix      # GNOME
-    ../modules/desktops/hyprland/home.nix   # HYPRLAND
+    ../modules/desktops/gnome/home.nix      # GNOME
+    #../modules/desktops/hyprland/home.nix   # HYPRLAND
     ../modules/apps/home
   ];
 
