@@ -48,6 +48,13 @@
     "org/gnome/mutter" = {
       center-new-windows = true;
     };
+    "org/gnome/desktop/wm/preferences" = {
+      num-workspaces = 5;
+      focus-mode = "sloppy";
+    };
+    "org/gnome/gnome-session" = {
+      auto-save-session = "true";
+    };
     "org/gnome/settings-daemon/plugins/power" = {
       sleep-inactive-ac-type = "nothing";
     };
@@ -78,16 +85,15 @@
 
     # Extensions config
     "org/gnome/shell/extensions/just-perfection" = {
-      activities-button = false;
-      app-menu = false;
-      panel = false;
       panel-in-overview = true;
       search = false;
-      workspace-switcher-size = 13;
+      workspace-switcher-size = 15;
     };
     "org/gnome/shell/extensions/pop-shell" = {
       tile-by-default = true;
       stacking-with-mouse = false;
+      gap-inner = 1;
+      gap-outer = 0;
     };
 
   };
