@@ -28,12 +28,9 @@
 
     # Hyprland
     hyprland.url = "github:hyprwm/Hyprland";
-
-    # Kde2nix (Temporal plasma 6)
-    kde2nix.url = "github:nix-community/kde2nix";
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, hyprland, kde2nix }: 
+  outputs =  inputs @ { self, nixpkgs, home-manager, ...}: 
     let
       # These are values that are passed to the nixos flake
       user = "kakxem";
@@ -46,7 +43,7 @@
       nixosConfigurations."desktopConfig" = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
-          inherit pkgs user kde2nix hyprland;
+          inherit pkgs user inputs;
         };
 
         modules = [
@@ -75,7 +72,7 @@
         inherit pkgs;
 
         extraSpecialArgs = {
-          inherit pkgs user kde2nix hyprland;
+          inherit pkgs user inputs;
         };
         modules = [
           ./core/home.nix
