@@ -4,7 +4,7 @@
 
 {
   imports = [
-    ./zsh.nix
+    # ./zsh.nix
     ./alacritty.nix
   ];
 }
