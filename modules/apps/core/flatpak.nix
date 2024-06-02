@@ -15,8 +15,16 @@
     };
     aggregatedFonts = pkgs.buildEnv {
       name = "system-fonts";
-      paths = config.fonts.fonts;
+      paths = config.fonts.packages;
       pathsToLink = [ "/share/fonts" ];
+    };
+    aggregatedIcons = pkgs.buildEnv {
+      name = "system-icons";
+      paths = with pkgs; [
+        #libsForQt5.breeze-qt5  # for plasma
+        gnome.gnome-themes-extra
+      ];
+      pathsToLink = [ "/share/icons" ];
     };
   in {
     # Create an FHS mount to support flatpak host icons/fonts

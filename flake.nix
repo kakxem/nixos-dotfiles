@@ -7,12 +7,18 @@
     extra-substituters = [
       # nix community's cache server
       "https://nix-community.cachix.org"
+
+      # Hyprland
+      "https://hyprland.cachix.org"
     ];
 
     # will be appended to the system-level trusted-public-keys
     extra-trusted-public-keys = [
       # nix community's cache server public key
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+
+      # Hyprland
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
   };
 
@@ -27,7 +33,7 @@
     };
 
     # Hyprland
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
   };
 
   outputs =  inputs @ { self, nixpkgs, home-manager, ...}: 
@@ -47,9 +53,6 @@
         };
 
         modules = [
-          # Import configuration
-          ./core/configuration.nix
-
           # Import cache
           {
             nix.settings.trusted-users = [ user ];
@@ -65,6 +68,9 @@
               ];
             };
           }
+
+          # Import configuration
+          ./core/configuration.nix
         ];
       };
 

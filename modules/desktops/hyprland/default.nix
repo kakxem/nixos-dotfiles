@@ -2,9 +2,15 @@
 #  Hyprland
 #
 
-{ pkgs, system, hyprland, ... }:
+{ pkgs, system, inputs, ... }:
 
 {
+  # Cachix
+  nix.settings = {
+    substituters = ["https://hyprland.cachix.org"];
+    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+  };
+
   environment = {
     sessionVariables = rec {
       XDG_CURRENT_DESKTOP = "Hyprland";
@@ -34,16 +40,14 @@
       swaynotificationcenter
       hyprpaper
       gnome.eog
-      libsForQt5.dolphin
-      libsForQt5.kate
-      libsForQt5.ark
+      gnome.nautilus
     ];
   };
 
 
   programs.hyprland = {
     enable = true;
-    package = hyprland.packages.${pkgs.system}.hyprland;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
 
   # Gnome keyring
@@ -52,7 +56,12 @@
     gnome.gnome-keyring.enable = true;
     xserver = {
       enable = true;
-      layout = "us";                              # Keyboard layout
+
+      xkb = {
+        layout = "us";                          # Keyboard layout
+        options = "eurosign:e";                 # €-sign
+      };
+
       displayManager.gdm.enable = true;           # Display Manager
     };
     udisks2.enable = true;
@@ -62,4 +71,7 @@
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
+
+  # Enable pipewire
+  hardware.pulseaudio.enable = false;
 }
