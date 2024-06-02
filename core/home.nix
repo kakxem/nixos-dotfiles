@@ -6,15 +6,15 @@
 
 { 
   imports = [
-    ../modules/desktops/gnome/home.nix      # GNOME
-    #../modules/desktops/hyprland/home.nix   # HYPRLAND
+    # ../modules/desktops/gnome/home.nix      # GNOME
+    ../modules/desktops/hyprland/home.nix   # HYPRLAND
     ../modules/apps/home
   ];
 
   home = {
     username = "${user}";
     homeDirectory = "/home/${user}";
-    stateVersion = "22.05";
+    stateVersion = "24.05";
     packages = with pkgs; [
       # Personal
       firefox
@@ -29,6 +29,8 @@
 
       # Work
       distrobox
+      docker-compose
+      bun
     ];
   };
 
