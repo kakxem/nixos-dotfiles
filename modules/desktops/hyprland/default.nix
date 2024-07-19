@@ -25,21 +25,24 @@
       XDG_SESSION_TYPE = "wayland";
       GBM_BACKEND = "nvidia-drm";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      NVD_BACKEND = "direct";
     };
    
 
     systemPackages = with pkgs; [
       grim
+      ulauncher
       slurp
       swappy
+      xdg-desktop-portal
       wl-clipboard
       wlr-randr
-      wofi
       libnotify
       swaynotificationcenter
       hyprpaper
-      gnome.eog
-      gnome.nautilus
+      eog
+      nautilus
+      via
     ];
   };
 
@@ -64,10 +67,21 @@
       displayManager.gdm.enable = true;           # Display Manager
     };
     udisks2.enable = true;
+
+    dbus.implementation = "broker";
+    dbus.packages = with pkgs; [
+      gcr
+      gnome.gnome-settings-daemon
+    ]; 
+    udev.packages = with pkgs; [
+      gnome.gnome-settings-daemon
+      via
+    ];
   };
 
   xdg.portal = {                                  # Required for flatpak with window managers and for file browsing
     enable = true;
+    xdgOpenUsePortal = false;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
