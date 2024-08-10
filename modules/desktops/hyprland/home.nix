@@ -27,7 +27,7 @@ let
 
     # Execute your favorite apps at launch
     exec-once = hyprpaper &
-    exec-once = firefox &
+    exec-once = brave &
     exec-once = telegram-desktop &
     exec-once = vesktop &
     exec-once = swaync &

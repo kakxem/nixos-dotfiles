@@ -42,7 +42,9 @@
       hyprpaper
       eog
       nautilus
-      via
+      pavucontrol
+      gnome.gnome-software
+      gnome.gnome-system-monitor
     ];
   };
 
@@ -75,7 +77,6 @@
     ]; 
     udev.packages = with pkgs; [
       gnome.gnome-settings-daemon
-      via
     ];
   };
 

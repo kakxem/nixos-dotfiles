@@ -84,6 +84,10 @@
     flatpak.enable = true;                # Flatpak
 
     xserver.videoDrivers = ["nvidia"];    # Nvidia drivers
+
+    udev.packages = with pkgs; [
+      via
+    ];
   };
 
   # Configure console keymap (tty)
@@ -133,6 +137,8 @@
       git
       neovim
       linuxKernel.packages.linux_zen.xone
+      xclip
+      via
     ];
 
     sessionVariables = {
