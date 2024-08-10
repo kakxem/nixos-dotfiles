@@ -17,15 +17,15 @@
     stateVersion = "24.05";
     packages = with pkgs; [
       # Personal
-      firefox
-      _1password-gui
+      brave
+      bitwarden
       hexchat
       mpv
       telegram-desktop
-      xclip
       xorg.xlsclients
       alacritty
       vesktop
+      vscode-fhs
 
       # Work
       distrobox
