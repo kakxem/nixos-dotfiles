@@ -19,8 +19,11 @@
   dconf.settings = {
     "org/gnome/shell" = {
       favorite-apps = [
-        "firefox.desktop"
+        "brave-browser.desktop"
         "org.gnome.Nautilus.desktop"
+        "vesktop.desktop"
+        "org.telegram.desktop.desktop"
+        "bitwarden.desktop"
       ];
       disable-user-extensions = false;
       enabled-extensions = [
@@ -51,6 +54,10 @@
     "org/gnome/desktop/wm/preferences" = {
       num-workspaces = 5;
       focus-mode = "sloppy";
+    };
+    "org/gnome/desktop/peripherals/mouse" = {
+      accle-profile = "flat";
+      natural-scroll = true;
     };
     "org/gnome/gnome-session" = {
       auto-save-session = "true";
