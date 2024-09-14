@@ -5,6 +5,10 @@
 {  pkgs, ... }:
 
 {
+  imports = [
+    ./overlays.nix
+  ];
+
   programs = {
     dconf.enable = true;
   };
