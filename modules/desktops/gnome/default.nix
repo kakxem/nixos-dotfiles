@@ -23,22 +23,21 @@
 
     };
     udev.packages = with pkgs; [
-      gnome.gnome-settings-daemon
+      gnome-settings-daemon
     ];
   };
 
   environment = {
     systemPackages = with pkgs; [                 # Packages installed
-      gnome.dconf-editor
-      gnome.gnome-tweaks
-      gnome.adwaita-icon-theme
-      gnome.gnome-software
+      dconf-editor
+      gnome-tweaks
+      adwaita-icon-theme
+      gnome-software
       gnome-text-editor
     ];
 
     gnome.excludePackages = (with pkgs; [         # Gnome ignored packages
       gnome-tour
-    ]) ++ (with pkgs.gnome; [
       epiphany
       geary
       gnome-characters
