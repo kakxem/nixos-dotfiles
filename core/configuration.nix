@@ -7,8 +7,8 @@
 {  
   imports = [
     ./hardware-configuration.nix
-    # ../modules/desktops/gnome         # GNOME
-    ../modules/desktops/hyprland      # HYPRLAND
+    ../modules/desktops/gnome         # GNOME
+    # ../modules/desktops/hyprland      # HYPRLAND
     # ../modules/desktops/kde             # KDE
     ../modules/apps/core
   ];
