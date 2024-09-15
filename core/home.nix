@@ -16,6 +16,12 @@
     homeDirectory = "/home/${user}";
     stateVersion = "24.05";
     packages = with pkgs; [
+      # Fonts
+      (nerdfonts.override { fonts = [ 
+        "FiraCode" 
+        "CascadiaCode"
+      ]; })
+      
       # Personal
       brave
       bitwarden
@@ -33,6 +39,8 @@
       bun
     ];
   };
+
+  fonts.fontconfig.enable = true;
 
   programs = {
     home-manager.enable = true;
