@@ -21,7 +21,7 @@
         "FiraCode" 
         "CascadiaCode"
       ]; })
-      
+
       # Personal
       brave
       bitwarden
@@ -31,12 +31,13 @@
       xorg.xlsclients
       alacritty
       vesktop
-      vscode-fhs
 
       # Work
+      vscode-fhs
       distrobox
       docker-compose
       bun
+      deno
     ];
   };
 
