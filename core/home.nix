@@ -34,6 +34,7 @@
 
       # Work
       vscode-fhs
+      code-cursor
       distrobox
       docker-compose
       bun
