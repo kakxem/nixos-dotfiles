@@ -156,10 +156,8 @@
 
   # Fonts
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ 
-      "FiraCode" 
-      #"CascadiaCode"
-     ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.caskaydia-cove
   ];
 
   # Remove xterm

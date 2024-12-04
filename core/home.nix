@@ -17,10 +17,8 @@
     stateVersion = "24.05";
     packages = with pkgs; [
       # Fonts
-      (nerdfonts.override { fonts = [ 
-        "FiraCode" 
-        "CascadiaCode"
-      ]; })
+      nerd-fonts.fira-code
+      nerd-fonts.caskaydia-cove
 
       # Personal
       brave
