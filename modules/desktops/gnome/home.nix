@@ -20,10 +20,10 @@
     "org/gnome/shell" = {
       favorite-apps = [
         "brave-browser.desktop"
+        "app.zen_browser.zen.desktop"
         "org.gnome.Nautilus.desktop"
         "vesktop.desktop"
         "org.telegram.desktop.desktop"
-        "bitwarden.desktop"
       ];
       disable-user-extensions = false;
       enabled-extensions = [
@@ -57,7 +57,7 @@
     };
     "org/gnome/desktop/peripherals/mouse" = {
       accle-profile = "flat";
-      natural-scroll = true;
+      natural-scroll = false;
     };
     "org/gnome/gnome-session" = {
       auto-save-session = "true";
@@ -99,7 +99,7 @@
     "org/gnome/shell/extensions/pop-shell" = {
       tile-by-default = true;
       stacking-with-mouse = false;
-      gap-inner = 1;
+      gap-inner = 0;
       gap-outer = 0;
     };
 
