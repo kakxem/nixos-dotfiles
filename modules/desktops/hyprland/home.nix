@@ -47,7 +47,6 @@ let
         kb_rules =
 
         follow_mouse = 1
-        natural_scroll = 1
         accel_profile = flat
 
         touchpad {
@@ -73,11 +72,6 @@ let
         # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
         rounding = 10
-
-        drop_shadow = yes
-        shadow_range = 4
-        shadow_render_power = 3
-        col.shadow = rgba(1a1a1aee)
     }
 
     animations {

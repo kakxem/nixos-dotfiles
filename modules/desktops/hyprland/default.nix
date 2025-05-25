@@ -43,8 +43,8 @@
       eog
       nautilus
       pavucontrol
-      gnome.gnome-software
-      gnome.gnome-system-monitor
+      gnome-software
+      gnome-system-monitor
     ];
   };
 
@@ -74,11 +74,14 @@
     dbus.implementation = "broker";
     dbus.packages = with pkgs; [
       gcr
-      gnome.gnome-settings-daemon
+      gnome-settings-daemon
     ]; 
     udev.packages = with pkgs; [
-      gnome.gnome-settings-daemon
+      gnome-settings-daemon
     ];
+
+    # Enable pipewire
+    pulseaudio.enable = false;
   };
 
   xdg.portal = {                                  # Required for flatpak with window managers and for file browsing
@@ -86,7 +89,4 @@
     xdgOpenUsePortal = false;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
-
-  # Enable pipewire
-  hardware.pulseaudio.enable = false;
 }
