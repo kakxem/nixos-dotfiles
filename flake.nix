@@ -46,7 +46,7 @@
         config.allowUnfree = true;
       };
     in {
-      nixosConfigurations."desktopConfig" = nixpkgs.lib.nixosSystem {
+      nixosConfigurations."desktop" = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
           inherit pkgs user inputs;

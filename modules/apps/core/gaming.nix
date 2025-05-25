@@ -12,6 +12,7 @@
 
     # Tools
     r2modman
+    protonplus
   ];
 
   programs = {                                  # Needed to succesfully start Steam

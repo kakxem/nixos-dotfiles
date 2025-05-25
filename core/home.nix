@@ -22,7 +22,8 @@
 
       # Personal
       brave
-      bitwarden
+      proton-pass
+      protonvpn-gui
       hexchat
       mpv
       telegram-desktop
@@ -31,12 +32,13 @@
       vesktop
 
       # Work
-      vscode-fhs
       code-cursor
       distrobox
+      boxbuddy
+      gearlever
       docker-compose
       bun
-      deno
+      nodejs_23
     ];
   };
 
