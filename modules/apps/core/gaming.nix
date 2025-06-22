@@ -13,11 +13,13 @@
     # Tools
     r2modman
     protonplus
+    mangohud
   ];
 
   programs = {                                  # Needed to succesfully start Steam
     steam = {
       enable = true;
+      gamescopeSession.enable = true;
     };
 
     # -- Gamemode installation --
@@ -35,4 +37,6 @@
     "steam-original"
     "steam-runtime"
   ];                                            # Use Steam for Linux libraries
+
+  hardware.xone.enable = true;                  # Xbox controller support
 }
