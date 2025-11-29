@@ -7,5 +7,6 @@
     ./alacritty.nix
     ./fish.nix
     ./zed.nix
+    ./obs.nix
   ];
 }

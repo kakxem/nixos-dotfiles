@@ -38,8 +38,6 @@
       docker-compose
       bun
       nodejs_24
-      obs-studio
-      obs-studio-plugins.obs-vkcapture
     ];
   };
 
