@@ -16,11 +16,21 @@
     mangohud
   ];
 
+  environment.variables = {
+    PROTON_ENABLE_WAYLAND = 1;
+    PROTON_ENABLE_HDR = 1;
+    PROTON_FSR4_UPGRADE = 1;
+  };
+
   programs = {
     # Needed to succesfully start Steam
     steam = {
       enable = true;
       gamescopeSession.enable = true;
+
+      extraCompatPackages = with pkgs; [
+        proton-ge-bin
+      ];
     };
 
     # -- Gamemode installation --
