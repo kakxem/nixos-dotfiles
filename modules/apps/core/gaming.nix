@@ -6,13 +6,11 @@
 
 {
   environment.systemPackages = with pkgs; [
-    lutris
     steam
     wineWowPackages.base
 
     # Tools
     r2modman
-    protonplus
     mangohud
   ];
 
@@ -26,7 +24,6 @@
     # Needed to succesfully start Steam
     steam = {
       enable = true;
-      gamescopeSession.enable = true;
 
       extraCompatPackages = with pkgs; [
         proton-ge-bin

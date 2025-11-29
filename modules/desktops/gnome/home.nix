@@ -22,10 +22,10 @@
     "org/gnome/shell" = {
       favorite-apps = [
         "brave-browser.desktop"
-        "app.zen_browser.zen.desktop"
-        "org.gnome.Nautilus.desktop"
         "vesktop.desktop"
         "org.telegram.desktop.desktop"
+        "steam.desktop"
+        "org.gnome.Nautilus.desktop"
       ];
       disable-user-extensions = false;
       enabled-extensions = [

@@ -60,7 +60,7 @@
           default_profile = "write";
           default_model = {
             provider = "openrouter";
-            model = "minimax/minimax-m2";
+            model = "openai/gpt-5.1";
           };
           model_parameters = [ ];
         };

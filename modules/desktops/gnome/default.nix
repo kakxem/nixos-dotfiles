@@ -60,6 +60,7 @@
         gnome-maps
         simple-scan
         cheese
+        gnome-software
       ]
     );
   };

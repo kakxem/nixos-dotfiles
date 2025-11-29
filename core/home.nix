@@ -33,7 +33,7 @@
 
       # Work
       distrobox
-      boxbuddy
+      distroshelf
       gearlever
       docker-compose
       bun
