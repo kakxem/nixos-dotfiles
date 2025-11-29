@@ -176,7 +176,8 @@ let
     vimcmd_replace_symbol = '[](bold fg:color_purple)'
     vimcmd_visual_symbol = '[](bold fg:color_yellow)'
   '';
-in {
+in
+{
   programs = {
     fish = {
       enable = true;
@@ -190,7 +191,6 @@ in {
   home.packages = with pkgs; [
     starship
   ];
-
 
   xdg.configFile."starship.toml".text = starshipConf;
 }

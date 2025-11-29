@@ -6,7 +6,7 @@
 
 {
   imports = [
-    ../modules/desktops/gnome/home.nix      # GNOME
+    ../modules/desktops/gnome/home.nix # GNOME
     # ../modules/desktops/hyprland/home.nix   # HYPRLAND
     ../modules/apps/home
   ];
@@ -33,6 +33,8 @@
 
       # Work
       zed-editor
+      nil # Zed dependency
+      nixd # Zed dependency
       distrobox
       boxbuddy
       gearlever

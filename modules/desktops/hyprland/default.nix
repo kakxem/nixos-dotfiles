@@ -2,17 +2,21 @@
 #  Hyprland
 #
 
-{ pkgs, system, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   # Cachix
   nix.settings = {
-    substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+    substituters = [ "https://hyprland.cachix.org" ];
+    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
   };
 
   environment = {
-    sessionVariables = rec {
+    sessionVariables = {
       XDG_CURRENT_DESKTOP = "Hyprland";
       XDG_SESSION_DESKTOP = "Hyprland";
       QT_QPA_PLATFORM = "wayland";
@@ -27,7 +31,6 @@
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
       NVD_BACKEND = "direct";
     };
-   
 
     systemPackages = with pkgs; [
       grim
@@ -48,11 +51,11 @@
     ];
   };
 
-
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    portalPackage =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
   # Gnome keyring
@@ -63,11 +66,11 @@
       enable = true;
 
       xkb = {
-        layout = "us";                          # Keyboard layout
-        options = "eurosign:e";                 # €-sign
+        layout = "us"; # Keyboard layout
+        options = "eurosign:e"; # €-sign
       };
 
-      displayManager.gdm.enable = true;           # Display Manager
+      displayManager.gdm.enable = true; # Display Manager
     };
     udisks2.enable = true;
 
@@ -75,7 +78,7 @@
     dbus.packages = with pkgs; [
       gcr
       gnome-settings-daemon
-    ]; 
+    ];
     udev.packages = with pkgs; [
       gnome-settings-daemon
     ];
@@ -84,7 +87,8 @@
     pulseaudio.enable = false;
   };
 
-  xdg.portal = {                                  # Required for flatpak with window managers and for file browsing
+  xdg.portal = {
+    # Required for flatpak with window managers and for file browsing
     enable = true;
     xdgOpenUsePortal = false;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

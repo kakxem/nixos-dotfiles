@@ -2,12 +2,16 @@
 # Core config of nixos
 #
 
-{ config, pkgs, lib, user, ... }:
+{
+  pkgs,
+  user,
+  ...
+}:
 
 {
   imports = [
     ./hardware-configuration.nix
-    ../modules/desktops/gnome         # GNOME
+    ../modules/desktops/gnome # GNOME
     # ../modules/desktops/hyprland      # HYPRLAND
     # ../modules/desktops/kde             # KDE
     ../modules/apps/core
@@ -15,11 +19,15 @@
 
   # Nix config
   nix = {
-    settings ={
-      auto-optimise-store = true;                            # Optimise syslinks
-      experimental-features = [ "nix-command" "flakes" ];    # ** Flakes **
+    settings = {
+      auto-optimise-store = true; # Optimise syslinks
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ]; # ** Flakes **
     };
-    gc = {                                  # Automatic garbage collection
+    gc = {
+      # Automatic garbage collection
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
@@ -31,10 +39,10 @@
     loader = {
       systemd-boot = {
         enable = true;
-        configurationLimit = 5;                 # Limit the amount of configurations
+        configurationLimit = 5; # Limit the amount of configurations
       };
       efi.canTouchEfiVariables = true;
-      timeout = 1;                              # Grub auto select time
+      timeout = 1; # Grub auto select time
     };
     kernelPackages = pkgs.linuxPackages_zen;
   };
@@ -49,9 +57,10 @@
 
   # Services
   services = {
-    printing.enable = true;               # Printing
+    printing.enable = true; # Printing
 
-    pipewire = {                          # Pipewire
+    pipewire = {
+      # Pipewire
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
@@ -92,7 +101,11 @@
   users.users.${user} = {
     isNormalUser = true;
     description = user;
-    extraGroups = [ "networkmanager" "wheel" "docker"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     shell = pkgs.fish;
   };
 
@@ -100,8 +113,8 @@
   security.rtkit.enable = true;
   #security.polkit.enable = true;
   programs.gnupg.agent = {
-     enable = true;
-     enableSSHSupport = false;
+    enable = true;
+    enableSSHSupport = false;
   };
   services.pcscd.enable = true;
 
@@ -114,7 +127,7 @@
     ];
 
     sessionVariables = {
-      NIXOS_OZONE_WL = "1";             # Enable wayland for electron
+      NIXOS_OZONE_WL = "1"; # Enable wayland for electron
 
       # Enable VA-API for Firefox
       MOZ_DISABLE_RDD_SANDBOX = "1";

@@ -2,7 +2,7 @@
 # Gnome configuration
 #
 
-{  pkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs = {
@@ -10,8 +10,8 @@
   };
 
   services = {
-    displayManager.gdm.enable = true;           # Display Manager
-    desktopManager.gnome.enable = true;         # Window Manager
+    displayManager.gdm.enable = true; # Display Manager
+    desktopManager.gnome.enable = true; # Window Manager
 
     # Enable pipewire
     pulseaudio.enable = false;
@@ -20,8 +20,8 @@
       enable = true;
 
       xkb = {
-        layout = "us";                          # Keyboard layout
-        options = "eurosign:e";                 # €-sign
+        layout = "us"; # Keyboard layout
+        options = "eurosign:e"; # €-sign
       };
     };
     udev.packages = with pkgs; [
@@ -30,7 +30,8 @@
   };
 
   environment = {
-    systemPackages = with pkgs; [                 # Packages installed
+    systemPackages = with pkgs; [
+      # Packages installed
       dconf-editor
       gnome-tweaks
       adwaita-icon-theme
@@ -39,23 +40,27 @@
       gnome-extension-manager
     ];
 
-    gnome.excludePackages = (with pkgs; [         # Gnome ignored packages
-      gnome-tour
-      epiphany
-      geary
-      gnome-characters
-      tali
-      iagno
-      hitori
-      atomix
-      yelp
-      gnome-contacts
-      gnome-initial-setup
-      gnome-music
-      gnome-calendar
-      gnome-maps
-      simple-scan
-      cheese
-    ]);
+    gnome.excludePackages = (
+      with pkgs;
+      [
+        # Gnome ignored packages
+        gnome-tour
+        epiphany
+        geary
+        gnome-characters
+        tali
+        iagno
+        hitori
+        atomix
+        yelp
+        gnome-contacts
+        gnome-initial-setup
+        gnome-music
+        gnome-calendar
+        gnome-maps
+        simple-scan
+        cheese
+      ]
+    );
   };
 }

@@ -1,6 +1,6 @@
 {
   description = "Kakxem nixos flake";
-  
+
   # the nixConfig here only affects the flake itself, not the system configuration!
   nixConfig = {
     # will be appended to the system-level substituters
@@ -36,7 +36,13 @@
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
   };
 
-  outputs =  inputs @ { self, nixpkgs, home-manager, ...}: 
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }:
     let
       # These are values that are passed to the nixos flake
       user = "kakxem";
@@ -45,7 +51,8 @@
         inherit system;
         config.allowUnfree = true;
       };
-    in {
+    in
+    {
       nixosConfigurations."desktop" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
         specialArgs = {
@@ -88,4 +95,3 @@
       packages.${system}."${user}" = self.homeConfigurations."${user}".activationPackage;
     };
 }
-

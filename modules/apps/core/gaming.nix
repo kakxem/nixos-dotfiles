@@ -2,7 +2,7 @@
 # Gaming
 #
 
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -16,7 +16,8 @@
     mangohud
   ];
 
-  programs = {                                  # Needed to succesfully start Steam
+  programs = {
+    # Needed to succesfully start Steam
     steam = {
       enable = true;
       gamescopeSession.enable = true;
@@ -29,10 +30,8 @@
     # *Lutris* : General Preferences - Enable Feral GameMode - Global options - Add Environment Variables:
     # LD_PRELOAD=/nix/store/*-gamemode-*-lib/lib/libgamemodeauto.so
     #
-    gamemode.enable = true;                     # Better gaming performance
+    gamemode.enable = true; # Better gaming performance
   };
 
-
-
-  hardware.xone.enable = true;                  # Xbox controller support
+  hardware.xone.enable = true; # Xbox controller support
 }
