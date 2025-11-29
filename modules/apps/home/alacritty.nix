@@ -13,7 +13,7 @@
           bold = {
             style = "Bold";
           };
-          size = 27;
+          size = 21;
         };
         window.decorations = "none";
       };
