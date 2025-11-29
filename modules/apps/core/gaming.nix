@@ -6,7 +6,6 @@
 
 {
   environment.systemPackages = with pkgs; [
-    steam
     wineWowPackages.base
 
     # Tools
