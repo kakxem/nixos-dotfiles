@@ -6,5 +6,6 @@
   imports = [
     ./alacritty.nix
     ./fish.nix
+    ./zed.nix
   ];
 }

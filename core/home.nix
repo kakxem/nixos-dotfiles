@@ -32,9 +32,6 @@
       vesktop
 
       # Work
-      zed-editor
-      nil # Zed dependency
-      nixd # Zed dependency
       distrobox
       boxbuddy
       gearlever
