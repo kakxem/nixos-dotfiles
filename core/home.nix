@@ -31,6 +31,7 @@
       xorg.xlsclients
       alacritty
       vesktop
+      anki
 
       # Work
       distrobox
