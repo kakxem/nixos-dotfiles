@@ -6,7 +6,7 @@
 
 {
   services.flatpak.enable = true;        # Flatpak
-  
+
   # Add flathub repo automatically
   systemd.services.flatpak-repo = {
     wantedBy = [ "multi-user.target" ];
@@ -15,7 +15,7 @@
       flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     '';
   };
-  
+
   system.fsPackages = [ pkgs.bindfs ];
   fileSystems = let
     mkRoSymBind = path: {
@@ -37,8 +37,7 @@
       pathsToLink = [ "/share/icons" ];
     };
   in {
-    # Create an FHS mount to support flatpak host icons/fonts
+    # Create an FHS mount to support flatpak host icons
     "/usr/share/icons" = mkRoSymBind (config.system.path + "/share/icons");
-    "/usr/share/fonts" = mkRoSymBind (aggregatedFonts + "/share/fonts");
   };
 }

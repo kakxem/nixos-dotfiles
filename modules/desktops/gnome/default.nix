@@ -5,15 +5,17 @@
 {  pkgs, ... }:
 
 {
-  imports = [
-    ./overlays.nix
-  ];
-
   programs = {
     dconf.enable = true;
   };
 
   services = {
+    displayManager.gdm.enable = true;           # Display Manager
+    desktopManager.gnome.enable = true;         # Window Manager
+
+    # Enable pipewire
+    pulseaudio.enable = false;
+
     xserver = {
       enable = true;
 
@@ -21,10 +23,6 @@
         layout = "us";                          # Keyboard layout
         options = "eurosign:e";                 # €-sign
       };
-
-      displayManager.gdm.enable = true;           # Display Manager
-      desktopManager.gnome.enable = true;         # Window Manager
-
     };
     udev.packages = with pkgs; [
       gnome-settings-daemon
@@ -36,8 +34,9 @@
       dconf-editor
       gnome-tweaks
       adwaita-icon-theme
-      gnome-software
       gnome-text-editor
+      bazaar
+      gnome-extension-manager
     ];
 
     gnome.excludePackages = (with pkgs; [         # Gnome ignored packages
@@ -59,7 +58,4 @@
       cheese
     ]);
   };
-
-  # Enable pipewire
-  hardware.pulseaudio.enable = false;
 }

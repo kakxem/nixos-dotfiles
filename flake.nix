@@ -47,9 +47,9 @@
       };
     in {
       nixosConfigurations."desktop" = nixpkgs.lib.nixosSystem {
-        inherit system;
+        inherit pkgs;
         specialArgs = {
-          inherit pkgs user inputs;
+          inherit user inputs;
         };
 
         modules = [
