@@ -13,6 +13,8 @@
     gnomeExtensions.pop-shell
     gnomeExtensions.just-perfection
     gnomeExtensions.middle-click-to-close-in-overview
+    gnomeExtensions.gsconnect
+    gnomeExtensions.quick-settings-audio-panel
     adw-gtk3
   ];
 
@@ -32,6 +34,8 @@
         "just-perfection-desktop@just-perfection"
         "middleclickclose@paolo.tranquilli.gmail.com"
         "pop-shell@system76.com"
+        "gsconnect@andyholmes.github.io"
+        "quick-settings-audio-panel@rayzeq.github.io"
       ];
     };
 
