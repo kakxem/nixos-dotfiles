@@ -146,8 +146,14 @@
   # Remove xterm
   services.xserver.excludePackages = [ pkgs.xterm ];
 
-  # Docker
-  virtualisation.docker.enable = true;
+  # Docker and waydroid
+  virtualisation = {
+    docker.enable = true;
+    waydroid.enable = true;
+  };
+
+  # # Changes needed for waydroid
+  networking.nftables.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
