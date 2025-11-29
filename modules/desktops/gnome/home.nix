@@ -10,12 +10,12 @@
   home.packages = with pkgs; [
     gnomeExtensions.appindicator
     gnomeExtensions.blur-my-shell
-    gnomeExtensions.pop-shell  
+    gnomeExtensions.pop-shell
     gnomeExtensions.just-perfection
     gnomeExtensions.middle-click-to-close-in-overview
     adw-gtk3
   ];
-  
+
   dconf.settings = {
     "org/gnome/shell" = {
       favorite-apps = [
@@ -50,6 +50,7 @@
     };
     "org/gnome/mutter" = {
       center-new-windows = true;
+      dynamic-workspaces = false;
     };
     "org/gnome/desktop/wm/preferences" = {
       num-workspaces = 5;
@@ -70,6 +71,13 @@
       search-view = "list-view";
       show-create-link = true;
       show-delete-permanently = true;
+    };
+    "org/gnome/desktop/background" = {
+      picture-uri = "#";
+      picture-uri-dark = "#";
+      primary-color = "#000000";
+      secondary-color = "#000000";
+      picture-options = "none";
     };
 
     # Keybindings
