@@ -57,7 +57,7 @@
       dynamic-workspaces = false;
     };
     "org/gnome/desktop/wm/preferences" = {
-      num-workspaces = 5;
+      num-workspaces = 6;
       focus-mode = "sloppy";
     };
     "org/gnome/desktop/peripherals/mouse" = {
