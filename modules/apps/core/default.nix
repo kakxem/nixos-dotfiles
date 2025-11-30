@@ -6,6 +6,6 @@
   imports = [
     ./flatpak.nix
     ./gaming.nix
-    # ./cider
+    ./sunshine.nix
   ];
 }
