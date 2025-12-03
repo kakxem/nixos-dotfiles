@@ -124,6 +124,29 @@
       neovim
       linuxKernel.packages.linux_zen.xone
       xclip
+
+      # Expose custom setup scripts as system-wide commands
+      (pkgs.writeShellScriptBin "rebuild-desktop" ''
+        set -euo pipefail
+
+        # If not running as root, re-exec via sudo. On NixOS, the setuid sudo wrapper
+        # is available on PATH, so we intentionally *do not* call ${pkgs.sudo}/bin/sudo.
+        if [ "$EUID" -ne 0 ]; then
+          exec sudo ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake ${builtins.toString ../.}#desktop
+        else
+          exec ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake ${builtins.toString ../.}#desktop
+        fi
+      '')
+      (pkgs.writeShellScriptBin "rebuild-home" ''
+        set -euo pipefail
+
+        if [ "$EUID" -eq 0 ]; then
+          echo "rebuild-home: this script should be run as your regular user, not as root." >&2
+          exit 1
+        fi
+
+        ${pkgs.home-manager}/bin/home-manager switch --flake ${builtins.toString ../.}#kakxem
+      '')
     ];
 
     sessionVariables = {
