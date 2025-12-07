@@ -40,6 +40,7 @@
       docker-compose
       bun
       nodejs_24
+      mission-center
     ];
   };
 
