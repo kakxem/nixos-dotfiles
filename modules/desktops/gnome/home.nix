@@ -10,7 +10,7 @@
   home.packages = with pkgs; [
     gnomeExtensions.appindicator
     gnomeExtensions.blur-my-shell
-    gnomeExtensions.pop-shell
+    # gnomeExtensions.pop-shell
     gnomeExtensions.just-perfection
     gnomeExtensions.middle-click-to-close-in-overview
     gnomeExtensions.gsconnect
@@ -33,7 +33,7 @@
         "blur-my-shell@aunetx"
         "just-perfection-desktop@just-perfection"
         "middleclickclose@paolo.tranquilli.gmail.com"
-        "pop-shell@system76.com"
+        # "pop-shell@system76.com"
         "gsconnect@andyholmes.github.io"
         "quick-settings-audio-panel@rayzeq.github.io"
       ];
