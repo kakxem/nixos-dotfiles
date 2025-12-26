@@ -8,5 +8,6 @@
     ./fish.nix
     ./zed.nix
     ./obs.nix
+    ./mpv.nix
   ];
 }

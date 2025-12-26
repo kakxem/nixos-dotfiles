@@ -26,7 +26,6 @@
       proton-pass
       protonvpn-gui
       hexchat
-      mpv
       telegram-desktop
       xorg.xlsclients
       alacritty
