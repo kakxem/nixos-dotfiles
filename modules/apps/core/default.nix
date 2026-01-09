@@ -7,5 +7,6 @@
     ./flatpak.nix
     ./gaming.nix
     ./sunshine.nix
+    ./virtualization.nix
   ];
 }

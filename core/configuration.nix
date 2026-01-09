@@ -104,7 +104,6 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-      "docker"
     ];
     shell = pkgs.fish;
   };
@@ -174,12 +173,6 @@
 
   # Remove xterm
   services.xserver.excludePackages = [ pkgs.xterm ];
-
-  # Docker and waydroid
-  virtualisation = {
-    docker.enable = true;
-    waydroid.enable = true;
-  };
 
   # # Changes needed for waydroid
   networking.nftables.enable = true;
