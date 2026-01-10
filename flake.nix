@@ -59,7 +59,7 @@
         nixpkgs.lib.nixosSystem {
           inherit pkgs;
           specialArgs = {
-            inherit inputs desktop;
+            inherit inputs;
           } // vars;
 
           modules = [
@@ -91,7 +91,7 @@
           inherit pkgs;
 
           extraSpecialArgs = {
-            inherit pkgs inputs desktop;
+            inherit pkgs inputs;
           } // vars;
           modules = [
             ./core/home.nix

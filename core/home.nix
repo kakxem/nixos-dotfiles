@@ -2,7 +2,7 @@
 #  General Home-manager configuration
 #
 
-{ pkgs, user, desktop ? "gnome", ... }:
+{ pkgs, user, desktop, ... }:
 
 let
   desktopHomeModules = {

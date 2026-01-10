@@ -5,7 +5,7 @@
 {
   pkgs,
   user,
-  desktop ? "gnome",
+  desktop,
   ...
 }:
 
