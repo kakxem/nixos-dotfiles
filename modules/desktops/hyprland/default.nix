@@ -2,13 +2,9 @@
 #  Hyprland
 #
 
-{
-  pkgs,
-  inputs,
-  ...
-}:
+{ config, pkgs, inputs, lib, ... }:
 
-{
+lib.mkIf (config.desktop == "hyprland") {
   # Cachix
   nix.settings = {
     substituters = [ "https://hyprland.cachix.org" ];
@@ -23,13 +19,6 @@
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       GDK_BACKEND = "wayland";
       MOZ_ENABLE_WAYLAND = "1";
-
-      # Nvidia
-      LIBVA_DRIVER_NAME = "nvidia";
-      XDG_SESSION_TYPE = "wayland";
-      GBM_BACKEND = "nvidia-drm";
-      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-      NVD_BACKEND = "direct";
     };
 
     systemPackages = with pkgs; [

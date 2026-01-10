@@ -49,3 +49,52 @@ sudo ./scripts/install.sh
 ## Customising
 
 Edit `core/configuration.nix` to adjust system settings, enable/disable modules, or change packages. User‑specific settings are in `core/home.nix`.
+
+## Switching Desktop Environments
+
+This configuration supports multiple desktop environments (GNOME, Hyprland, KDE, Cosmic) via a unified parameter `desktop`. By default, GNOME is selected.
+
+### Using the pre‑installed scripts
+
+The system provides two convenience commands:
+
+- `rebuild-desktop` – rebuilds the system configuration (requires sudo)
+- `rebuild-home` – rebuilds the user’s home‑manager configuration
+
+Both scripts now accept an optional environment variable `DESKTOP` to choose the desktop. For example:
+
+```bash
+DESKTOP=hyprland rebuild-desktop
+DESKTOP=hyprland rebuild-home
+```
+
+If `DESKTOP` is not set, the default (`gnome`) is used.
+
+### Manual rebuild with explicit desktop
+
+You can also run the underlying flake commands directly:
+
+```bash
+# Rebuild system with Hyprland
+sudo nixos-rebuild switch --flake ~/.config/nixos-dotfiles#desktop --argstr desktop "hyprland"
+
+# Rebuild home‑manager with Hyprland
+home-manager switch --flake ~/.config/nixos-dotfiles#kakxem --argstr desktop "hyprland"
+```
+
+### Available desktop options
+
+- `gnome` – GNOME with GDM
+- `hyprland` – Hyprland with GDM
+- `kde` – KDE Plasma 6 (display manager not yet configured)
+- `cosmic` – COSMIC (not yet implemented)
+
+## Adding new desktop modules
+
+1. Create a new directory under `modules/desktops/` (e.g., `cosmic`).
+2. Add a `default.nix` for system‑level services and packages, using `lib.mkIf (config.desktop == "cosmic")`.
+3. Optionally add a `home.nix` for user‑level settings.
+4. Update `modules/desktop/default.nix` to import the new module.
+5. Update the `desktopHomeModules` mapping in `core/home.nix` if a home configuration exists.
+
+The configuration will automatically include the appropriate modules when the `desktop` argument is set.

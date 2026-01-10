@@ -2,14 +2,20 @@
 #  General Home-manager configuration
 #
 
-{ pkgs, user, ... }:
+{ pkgs, user, desktop ? "gnome", ... }:
 
+let
+  desktopHomeModules = {
+    gnome = [ ../modules/desktops/gnome/home.nix ];
+    hyprland = [ ../modules/desktops/hyprland/home.nix ];
+    kde = [ ];
+    cosmic = [ ];
+  };
+in
 {
   imports = [
-    ../modules/desktops/gnome/home.nix # GNOME
-    # ../modules/desktops/hyprland/home.nix   # HYPRLAND
     ../modules/apps/home
-  ];
+  ] ++ (desktopHomeModules.${desktop} or []);
 
   home = {
     username = "${user}";

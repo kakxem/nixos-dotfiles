@@ -5,15 +5,14 @@
 {
   pkgs,
   user,
+  desktop ? "gnome",
   ...
 }:
 
 {
   imports = [
     ./hardware-configuration.nix
-    ../modules/desktops/gnome # GNOME
-    # ../modules/desktops/hyprland      # HYPRLAND
-    # ../modules/desktops/kde             # KDE
+    ../modules/desktops
     ../modules/apps/core
   ];
 
@@ -53,6 +52,7 @@
       enable = true;
       enable32Bit = true;
     };
+    amdgpu.initrd.enable = true;
   };
 
   # Services
@@ -130,13 +130,14 @@
 
         # Always rebuild from your live checkout
         FLAKE_PATH="$HOME/.config/nixos-dotfiles"
+        DESKTOP="''${DESKTOP:-gnome}"
 
         # If not running as root, re-exec via sudo.
         # We don't interpolate FLAKE_PATH via Nix, so it won't be frozen in the store.
         if [ "$EUID" -ne 0 ]; then
-          exec sudo ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake "$FLAKE_PATH#desktop"
+          exec sudo ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake "$FLAKE_PATH#desktop" --argstr desktop "$DESKTOP"
         else
-          exec ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake "$FLAKE_PATH#desktop"
+          exec ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake "$FLAKE_PATH#desktop" --argstr desktop "$DESKTOP"
         fi
       '')
 
@@ -149,7 +150,8 @@
         fi
 
         FLAKE_PATH="$HOME/.config/nixos-dotfiles"
-        exec ${pkgs.home-manager}/bin/home-manager switch --flake "$FLAKE_PATH#kakxem"
+        DESKTOP="''${DESKTOP:-gnome}"
+        exec ${pkgs.home-manager}/bin/home-manager switch --flake "$FLAKE_PATH#kakxem" --argstr desktop "$DESKTOP"
       '')
     ];
 
@@ -176,6 +178,9 @@
 
   # # Changes needed for waydroid
   networking.nftables.enable = true;
+
+  # Desktop option (passed from flake)
+  desktop = desktop;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

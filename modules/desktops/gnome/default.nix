@@ -2,9 +2,9 @@
 # Gnome configuration
 #
 
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
-{
+lib.mkIf (config.desktop == "gnome") {
   programs = {
     dconf.enable = true;
   };

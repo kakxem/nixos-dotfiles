@@ -51,12 +51,14 @@
         inherit system;
         config.allowUnfree = true;
       };
+      # Desktop can be overridden via command line, e.g., --argstr desktop "hyprland"
+      desktop = "gnome"; # default
     in
     {
       nixosConfigurations."desktop" = nixpkgs.lib.nixosSystem {
         inherit pkgs;
         specialArgs = {
-          inherit user inputs;
+          inherit user inputs desktop;
         };
 
         modules = [
@@ -85,7 +87,7 @@
         inherit pkgs;
 
         extraSpecialArgs = {
-          inherit pkgs user inputs;
+          inherit pkgs user inputs desktop;
         };
         modules = [
           ./core/home.nix
