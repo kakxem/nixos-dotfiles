@@ -65,7 +65,7 @@
           modules = [
             # Import cache
             {
-              nix.settings.trusted-users = [ user ];
+              nix.settings.trusted-users = [ vars.user ];
               # the system-level substituers & trusted-public-keys
               nix.settings = {
                 substituters = [
