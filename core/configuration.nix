@@ -131,13 +131,16 @@
         # Always rebuild from your live checkout
         FLAKE_PATH="$HOME/.config/nixos-dotfiles"
         DESKTOP="''${DESKTOP:-gnome}"
+        
+        # Select the flake output based on the desktop environment
+        FLAKE_OUTPUT="desktop-$DESKTOP"
 
         # If not running as root, re-exec via sudo.
         # We don't interpolate FLAKE_PATH via Nix, so it won't be frozen in the store.
         if [ "$EUID" -ne 0 ]; then
-          exec sudo ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake "$FLAKE_PATH#desktop" --argstr desktop "$DESKTOP"
+          exec sudo ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake "$FLAKE_PATH#$FLAKE_OUTPUT"
         else
-          exec ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake "$FLAKE_PATH#desktop" --argstr desktop "$DESKTOP"
+          exec ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake "$FLAKE_PATH#$FLAKE_OUTPUT"
         fi
       '')
 
@@ -151,7 +154,11 @@
 
         FLAKE_PATH="$HOME/.config/nixos-dotfiles"
         DESKTOP="''${DESKTOP:-gnome}"
-        exec ${pkgs.home-manager}/bin/home-manager switch --flake "$FLAKE_PATH#kakxem" --argstr desktop "$DESKTOP"
+        
+        # Select the flake output based on the user and desktop environment
+        FLAKE_OUTPUT="${user}-$DESKTOP"
+        
+        exec ${pkgs.home-manager}/bin/home-manager switch --flake "$FLAKE_PATH#$FLAKE_OUTPUT"
       '')
     ];
 

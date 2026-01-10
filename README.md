@@ -72,14 +72,14 @@ If `DESKTOP` is not set, the default (`gnome`) is used.
 
 ### Manual rebuild with explicit desktop
 
-You can also run the underlying flake commands directly:
+You can also run the underlying flake commands directly by selecting the specific output for your desktop:
 
 ```bash
 # Rebuild system with Hyprland
-sudo nixos-rebuild switch --flake ~/.config/nixos-dotfiles#desktop --argstr desktop "hyprland"
+sudo nixos-rebuild switch --flake ~/.config/nixos-dotfiles#desktop-hyprland
 
 # Rebuild home‑manager with Hyprland
-home-manager switch --flake ~/.config/nixos-dotfiles#kakxem --argstr desktop "hyprland"
+home-manager switch --flake ~/.config/nixos-dotfiles#kakxem-hyprland
 ```
 
 ### Available desktop options

@@ -51,48 +51,86 @@
         inherit system;
         config.allowUnfree = true;
       };
-      # Desktop can be overridden via command line, e.g., --argstr desktop "hyprland"
-      desktop = "gnome"; # default
+
+      supportedDesktops = [
+        "gnome"
+        "hyprland"
+        "kde"
+        "cosmic"
+      ];
+
+      # Helper function to create a NixOS configuration
+      mkNixosConfig =
+        desktop:
+        nixpkgs.lib.nixosSystem {
+          inherit pkgs;
+          specialArgs = {
+            inherit user inputs desktop;
+          };
+
+          modules = [
+            # Import cache
+            {
+              nix.settings.trusted-users = [ user ];
+              # the system-level substituers & trusted-public-keys
+              nix.settings = {
+                substituters = [
+                  "https://cache.nixos.org"
+                ];
+
+                trusted-public-keys = [
+                  # the default public key of cache.nixos.org, it's built-in, no need to add it here
+                  "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+                ];
+              };
+            }
+
+            # Import configuration
+            ./core/configuration.nix
+          ];
+        };
+
+      # Helper function to create a Home Manager configuration
+      mkHomeConfig =
+        desktop:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+
+          extraSpecialArgs = {
+            inherit pkgs user inputs desktop;
+          };
+          modules = [
+            ./core/home.nix
+          ];
+        };
     in
     {
-      nixosConfigurations."desktop" = nixpkgs.lib.nixosSystem {
-        inherit pkgs;
-        specialArgs = {
-          inherit user inputs desktop;
-        };
+      nixosConfigurations =
+        {
+          # Default config (gnome)
+          "desktop" = mkNixosConfig "gnome";
+        }
+        // (nixpkgs.lib.genAttrs (map (d: "desktop-${d}") supportedDesktops) (
+          name:
+          let
+            desktop = builtins.substring 8 (-1) name;
+          in
+          mkNixosConfig desktop
+        ));
 
-        modules = [
-          # Import cache
-          {
-            nix.settings.trusted-users = [ user ];
-            # the system-level substituers & trusted-public-keys
-            nix.settings = {
-              substituters = [
-                "https://cache.nixos.org"
-              ];
-
-              trusted-public-keys = [
-                # the default public key of cache.nixos.org, it's built-in, no need to add it here
-                "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-              ];
-            };
-          }
-
-          # Import configuration
-          ./core/configuration.nix
-        ];
-      };
-
-      homeConfigurations."${user}" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        extraSpecialArgs = {
-          inherit pkgs user inputs desktop;
-        };
-        modules = [
-          ./core/home.nix
-        ];
-      };
+      homeConfigurations =
+        {
+          # Default config (gnome)
+          "${user}" = mkHomeConfig "gnome";
+        }
+        // (nixpkgs.lib.genAttrs (map (d: "${user}-${d}") supportedDesktops) (
+          name:
+          let
+            prefixLength = builtins.stringLength "${user}-";
+            desktop = builtins.substring prefixLength (-1) name;
+          in
+          mkHomeConfig desktop
+        ));
 
       packages.${system}."${user}" = self.homeConfigurations."${user}".activationPackage;
     };
