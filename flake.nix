@@ -25,6 +25,7 @@
   inputs = {
     # Change to stable if you want
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
 
     # User Package Management
     home-manager = {
@@ -53,13 +54,18 @@
         config.allowUnfree = true;
       };
 
+      pkgs-stable = import inputs.nixpkgs-stable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
       # Helper function to create a NixOS configuration
       mkNixosConfig =
         desktop:
         nixpkgs.lib.nixosSystem {
           inherit pkgs;
           specialArgs = {
-            inherit inputs;
+            inherit inputs pkgs-stable;
           } // vars;
 
           modules = [
@@ -91,7 +97,7 @@
           inherit pkgs;
 
           extraSpecialArgs = {
-            inherit pkgs inputs;
+            inherit pkgs inputs pkgs-stable;
           } // vars;
           modules = [
             ./core/home.nix

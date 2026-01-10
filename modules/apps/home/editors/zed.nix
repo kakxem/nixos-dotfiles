@@ -2,7 +2,7 @@
 # Zed
 #
 
-{ pkgs, ... }:
+{ pkgs, pkgs-stable, ... }:
 
 {
   home.packages = with pkgs; [
@@ -13,6 +13,7 @@
   programs = {
     zed-editor = {
       enable = true;
+      package = pkgs-stable.zed-editor;
       extensions = [ "nix" ];
       userSettings = {
         autosave = "on_focus_change";
