@@ -7,10 +7,7 @@
 
       # Always rebuild from your live checkout
       FLAKE_PATH="$HOME/.config/nixos-dotfiles"
-      DESKTOP="''${DESKTOP:-gnome}"
-      
-      # Select the flake output based on the desktop environment
-      FLAKE_OUTPUT="system-$DESKTOP"
+      FLAKE_OUTPUT="system"
 
       # If not running as root, re-exec via sudo.
       # We don't interpolate FLAKE_PATH via Nix, so it won't be frozen in the store.
@@ -30,10 +27,7 @@
       fi
 
       FLAKE_PATH="$HOME/.config/nixos-dotfiles"
-      DESKTOP="''${DESKTOP:-gnome}"
-      
-      # Select the flake output based on the user and desktop environment
-      FLAKE_OUTPUT="${user}-$DESKTOP"
+      FLAKE_OUTPUT="${user}"
       
       exec ${pkgs.home-manager}/bin/home-manager switch --flake "$FLAKE_PATH#$FLAKE_OUTPUT"
     '')

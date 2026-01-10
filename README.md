@@ -6,8 +6,8 @@ This repository contains a modular NixOS configuration managed as a **Flake**. I
 ## How it Works
 The configuration is designed to be highly modular and easy to customize:
 
-1.  **Centralized Variables (`vars.nix`)**: All user-specific info (name, email) and system toggles (architecture, supported desktops) are defined here.
-2.  **SpecialArgs**: These variables are passed from `flake.nix` to every module, allowing them to adapt dynamically (e.g., using `${user}` everywhere).
+1.  **Centralized Variables (`vars.nix`)**: All user-specific info (name, email) and system toggles (architecture, desktop environment) are defined here.
+2.  **SpecialArgs**: These variables are passed from `flake.nix` to every module, allowing them to adapt dynamically (e.g., using `${user}` and `${desktop}` everywhere).
 3.  **Modular Structure**:
     - **`core/`**: The entry points. `system.nix` defines the OS structure, and `home.nix` defines the user environment.
     - **`modules/config/`**: Low-level system configurations (Boot, Hardware, Services).
@@ -71,21 +71,25 @@ The system provides two convenience commands to apply changes:
 - **`rebuild-home`**: Rebuilds the Home Manager configuration.
 
 ### Switching Desktops
-Both scripts accept a `DESKTOP` environment variable to choose the environment (default is `gnome`):
+The desktop environment is managed through the `desktop` variable in `vars.nix`. 
+
+To switch environments:
+1.  Edit `vars.nix` and set `desktop` to one of: `"gnome"`, `"hyprland"`, `"kde"`, or `"cosmic"`.
+2.  Run the rebuild scripts to apply changes:
 
 ```bash
-DESKTOP=hyprland rebuild-system
-DESKTOP=hyprland rebuild-home
+rebuild-system
+rebuild-home
 ```
 
 ### Manual Rebuild
 You can also use the standard Nix commands:
 ```bash
 # System rebuild
-sudo nixos-rebuild switch --flake .#system-hyprland
+sudo nixos-rebuild switch --flake .#system
 
 # Home Manager rebuild
-home-manager switch --flake .#kakxem-hyprland
+home-manager switch --flake .#kakxem
 ```
 
 ## Available Desktops

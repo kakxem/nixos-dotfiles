@@ -99,32 +99,15 @@
         };
     in
     {
-      nixosConfigurations =
-        {
-          # Default config (gnome)
-          "system" = mkNixosConfig "gnome";
-        }
-        // (nixpkgs.lib.genAttrs (map (d: "system-${d}") vars.supportedDesktops) (
-          name:
-          let
-            desktop = builtins.substring 7 (-1) name;
-          in
-          mkNixosConfig desktop
-        ));
+      nixosConfigurations = {
+        # Default config (from vars)
+        "system" = mkNixosConfig vars.desktop;
+      };
 
-      homeConfigurations =
-        {
-          # Default config (gnome)
-          "${vars.user}" = mkHomeConfig "gnome";
-        }
-        // (nixpkgs.lib.genAttrs (map (d: "${vars.user}-${d}") vars.supportedDesktops) (
-          name:
-          let
-            prefixLength = builtins.stringLength "${vars.user}-";
-            desktop = builtins.substring prefixLength (-1) name;
-          in
-          mkHomeConfig desktop
-        ));
+      homeConfigurations = {
+        # Default config (from vars)
+        "${vars.user}" = mkHomeConfig vars.desktop;
+      };
 
       packages.${system}."${vars.user}" = self.homeConfigurations."${vars.user}".activationPackage;
     };

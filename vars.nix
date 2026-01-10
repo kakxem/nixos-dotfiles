@@ -7,10 +7,5 @@
 
   # System Settings
   system = "x86_64-linux";
-  supportedDesktops = [
-    "gnome"
-    "hyprland"
-    "kde"
-    "cosmic"
-  ];
+  desktop = "gnome"; # Possible options: "gnome", "hyprland", "kde", "cosmic"
 }
