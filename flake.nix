@@ -44,20 +44,14 @@
       ...
     }:
     let
-      # These are values that are passed to the nixos flake
-      user = "kakxem";
-      system = "x86_64-linux";
+      vars = import ./vars.nix;
+
+      # Use system from vars
+      system = vars.system;
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
-
-      supportedDesktops = [
-        "gnome"
-        "hyprland"
-        "kde"
-        "cosmic"
-      ];
 
       # Helper function to create a NixOS configuration
       mkNixosConfig =
@@ -65,8 +59,8 @@
         nixpkgs.lib.nixosSystem {
           inherit pkgs;
           specialArgs = {
-            inherit user inputs desktop;
-          };
+            inherit inputs desktop;
+          } // vars;
 
           modules = [
             # Import cache
@@ -86,7 +80,7 @@
             }
 
             # Import configuration
-            ./core/configuration.nix
+            ./core/system.nix
           ];
         };
 
@@ -97,8 +91,8 @@
           inherit pkgs;
 
           extraSpecialArgs = {
-            inherit pkgs user inputs desktop;
-          };
+            inherit pkgs inputs desktop;
+          } // vars;
           modules = [
             ./core/home.nix
           ];
@@ -108,12 +102,12 @@
       nixosConfigurations =
         {
           # Default config (gnome)
-          "desktop" = mkNixosConfig "gnome";
+          "system" = mkNixosConfig "gnome";
         }
-        // (nixpkgs.lib.genAttrs (map (d: "desktop-${d}") supportedDesktops) (
+        // (nixpkgs.lib.genAttrs (map (d: "system-${d}") vars.supportedDesktops) (
           name:
           let
-            desktop = builtins.substring 8 (-1) name;
+            desktop = builtins.substring 7 (-1) name;
           in
           mkNixosConfig desktop
         ));
@@ -121,17 +115,17 @@
       homeConfigurations =
         {
           # Default config (gnome)
-          "${user}" = mkHomeConfig "gnome";
+          "${vars.user}" = mkHomeConfig "gnome";
         }
-        // (nixpkgs.lib.genAttrs (map (d: "${user}-${d}") supportedDesktops) (
+        // (nixpkgs.lib.genAttrs (map (d: "${vars.user}-${d}") vars.supportedDesktops) (
           name:
           let
-            prefixLength = builtins.stringLength "${user}-";
+            prefixLength = builtins.stringLength "${vars.user}-";
             desktop = builtins.substring prefixLength (-1) name;
           in
           mkHomeConfig desktop
         ));
 
-      packages.${system}."${user}" = self.homeConfigurations."${user}".activationPackage;
+      packages.${system}."${vars.user}" = self.homeConfigurations."${vars.user}".activationPackage;
     };
 }

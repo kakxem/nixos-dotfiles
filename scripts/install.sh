@@ -27,11 +27,11 @@ cd "$REPO_ROOT"
 info "Using repository root: $REPO_ROOT"
 
 # Copy the hardware-configuration.nix from /etc/nixos
-step "Copying /etc/nixos/hardware-configuration.nix to core/"
-cp /etc/nixos/hardware-configuration.nix core/hardware-configuration.nix
+step "Copying /etc/nixos/hardware-configuration.nix to modules/config/hardware/"
+cp /etc/nixos/hardware-configuration.nix modules/config/hardware/generated.nix
 
-# Ensure flakes and git are enabled in configuration.nix
-CONFIG_FILE="/etc/nixos/configuration.nix"
+# Ensure flakes and git are enabled in system.nix
+CONFIG_FILE="/etc/nixos/system.nix"
 step "Ensuring flakes and git are enabled in $CONFIG_FILE"
 
 if ! grep -q 'experimental-features' "$CONFIG_FILE"; then
@@ -55,9 +55,9 @@ fi
 step "Rebuilding system to enable flakes and git (this may take a while)..."
 NIXOS_CONFIG="${CONFIG_FILE}" nixos-rebuild switch
 
-# Rebuild the system using the desktop flake from this repo
-step "Rebuilding system using desktop flake (${REPO_ROOT}#desktop)..."
-nixos-rebuild switch --flake "${REPO_ROOT}#desktop"
+# Rebuild the system using the system flake from this repo
+step "Rebuilding system using system flake (${REPO_ROOT}#system)..."
+nixos-rebuild switch --flake "${REPO_ROOT}#system"
 
 # Switch Home Manager configuration for the invoking user using the kakxem flake
 if [[ -n "${SUDO_USER:-}" ]]; then

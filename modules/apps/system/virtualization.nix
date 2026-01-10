@@ -38,6 +38,9 @@
     waydroid.enable = true;
   };
 
+  # Waydroid needs nftables
+  networking.nftables.enable = true;
+
   # Services for better guest integration
   services.spice-vdagentd.enable = true;
 }
