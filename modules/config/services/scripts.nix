@@ -29,7 +29,7 @@
       FLAKE_PATH="$HOME/.config/nixos-dotfiles"
       FLAKE_OUTPUT="${user}"
       
-      exec ${pkgs.home-manager}/bin/home-manager switch --flake "$FLAKE_PATH#$FLAKE_OUTPUT"
+      exec ${pkgs.home-manager}/bin/home-manager switch -b backup --flake "$FLAKE_PATH#$FLAKE_OUTPUT"
     '')
   ];
 }
