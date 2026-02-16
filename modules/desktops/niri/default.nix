@@ -68,6 +68,9 @@ in
       xdg-desktop-portal-gtk
       wl-clipboard
       libnotify
+      # Niri can automatically spawn Xwayland via xwayland-satellite when it's in $PATH.
+      # See: https://niri-wm.github.io/niri/Xwayland.html#using-xwayland-satellite
+      xwayland-satellite
       kdePackages."kdeconnect-kde"
       nautilus
       gnome-system-monitor
