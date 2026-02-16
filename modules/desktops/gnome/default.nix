@@ -36,7 +36,6 @@ lib.mkIf (config.desktop == "gnome") {
       gnome-tweaks
       adwaita-icon-theme
       gnome-text-editor
-      bazaar
       gnome-extension-manager
     ];
 

@@ -15,6 +15,7 @@
   environment.systemPackages = with pkgs; [
     neovim
     git
+    bazaar
     linuxKernel.packages.linux_zen.xone
     xclip
   ];
