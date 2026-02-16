@@ -6,7 +6,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    wineWowPackages.base
+    wineWow64Packages.base
 
     # Tools
     r2modman
