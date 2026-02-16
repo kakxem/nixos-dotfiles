@@ -10,6 +10,9 @@
 
       # Hyprland
       "https://hyprland.cachix.org"
+
+      # Niri
+      "https://niri.cachix.org"
     ];
 
     # will be appended to the system-level trusted-public-keys
@@ -19,6 +22,9 @@
 
       # Hyprland
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+
+      # Niri
+      "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
     ];
   };
 
@@ -35,6 +41,24 @@
 
     # Hyprland
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+
+    # DMS
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # DMS plugins (community registry)
+    "dms-plugin-registry" = {
+      url = "github:AvengeMedia/dms-plugin-registry";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Niri
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
