@@ -1,0 +1,13 @@
+{
+  "id": "volumeMixer",
+  "name": "Volume Mixer",
+  "description": "Bar widget that shows per-app audio streams and lets you adjust volume.",
+  "version": "0.1.0",
+  "author": "kakxem",
+  "icon": "volume_up",
+  "type": "widget",
+  "component": "./VolumeMixer.qml",
+  "requires_dms": ">=1.2.0",
+  "permissions": ["process"],
+  "requires": ["wpctl"]
+}

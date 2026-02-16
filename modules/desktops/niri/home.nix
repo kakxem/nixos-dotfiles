@@ -51,6 +51,14 @@ with lib;
   # and already exists (cmp errors on directories). Force replacement.
   xdg.configFile."DankMaterialShell/plugins/dankGifSearch".force = true;
 
+  xdg.configFile."DankMaterialShell/plugins/volumeMixer" = {
+    # Dev-friendly: keep this plugin as a live symlink to your dotfiles checkout
+    # so `dms ipc call plugins reload volumeMixer` picks up changes instantly.
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nixos-dotfiles/modules/desktops/niri/dms-plugins/volumeMixer";
+    recursive = true;
+    force = true;
+  };
+
   home.packages = with pkgs; [
     kdePackages."kdeconnect-kde"
   ];
