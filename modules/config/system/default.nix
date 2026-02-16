@@ -6,5 +6,6 @@
     ./nix.nix
     ./security.nix
     ./users.nix
+    ./network.nix
   ];
 }
