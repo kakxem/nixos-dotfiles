@@ -7,5 +7,5 @@
 
   # System Settings
   system = "x86_64-linux";
-  desktop = "gnome"; # Possible options: "gnome", "hyprland", "kde", "cosmic"
+  desktop = "niri"; # Possible options: "gnome", "hyprland", "kde", "cosmic", "niri"
 }
