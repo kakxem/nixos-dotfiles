@@ -31,5 +31,6 @@
     nodejs_24
     mission-center
     opencode
+    vscode-fhs
   ];
 }
