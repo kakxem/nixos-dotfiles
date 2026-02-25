@@ -62,7 +62,12 @@ nixos-rebuild switch --flake "${REPO_ROOT}#system"
 # Switch Home Manager configuration for the invoking user using the kakxem flake
 if [[ -n "${SUDO_USER:-}" ]]; then
   step "Switching Home Manager configuration for ${SUDO_USER} (${REPO_ROOT}#kakxem)..."
-  sudo -u "$SUDO_USER" home-manager switch --flake "${REPO_ROOT}#kakxem"
+  if hash home-manager 2>/dev/null || [ -x "/run/current-system/sw/bin/home-manager" ]; then
+    sudo -i -u "$SUDO_USER" home-manager switch --flake "${REPO_ROOT}#kakxem"
+  else
+    info "home-manager command not in PATH yet, falling back to nix run..."
+    sudo -i -u "$SUDO_USER" nix run github:nix-community/home-manager -- switch --flake "${REPO_ROOT}#kakxem"
+  fi
 else
   info "SUDO_USER not set; skipping Home Manager switch. You can run 'rebuild-home' later as your normal user."
 fi

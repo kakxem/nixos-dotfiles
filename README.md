@@ -68,7 +68,9 @@ sudo ./scripts/install.sh
 The system provides two convenience commands to apply changes:
 
 - **`rebuild-system`**: Rebuilds the NixOS system configuration (requires sudo).
-- **`rebuild-home`**: Rebuilds the Home Manager configuration.
+- **`rebuild-home`**: Rebuilds the Home Manager configuration (standalone, no sudo required).
+
+*Note: This repository uses a **Flake-based standalone** setup for Home Manager. The `home-manager` CLI is installed system-wide during `rebuild-system`, so `rebuild-home` works immediately after the system is installed.*
 
 ### Switching Desktops
 The desktop environment is managed through the `desktop` variable in `vars.nix`. 
