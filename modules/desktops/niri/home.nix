@@ -15,6 +15,24 @@ with lib;
     inputs."dms-plugin-registry".modules.default
   ];
 
+  systemd.user.services.polkit-gnome-authentication-agent-1 = {
+    Unit = {
+      Description = "Polkit Authentication Agent";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+      Restart = "on-failure";
+      RestartSec = 1;
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
   xdg.configFile."niri/dms/binds.kdl".text = ''
     binds {
         Ctrl+Space hotkey-overlay-title="Application Launcher" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
@@ -74,7 +92,7 @@ with lib;
   programs.niri.settings.input.keyboard.numlock = mkDefault true;
 
   # Focus follows mouse (hover-to-focus).
-  programs.niri.settings.input.focus-follows-mouse.enable = mkDefault true;
+  programs.niri.settings.input.focus-follows-mouse.enable = mkDefault false;
 
   # Disable mouse acceleration.
   programs.niri.settings.input.mouse.accel-profile = mkDefault "flat";

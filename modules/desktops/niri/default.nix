@@ -21,6 +21,8 @@ in
       package = pkgs.kdePackages."kdeconnect-kde";
     };
 
+    networking.networkmanager.enable = true;
+
     networking.firewall.allowedTCPPortRanges = [
       {
         from = 1714;
