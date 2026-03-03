@@ -25,7 +25,6 @@
     # Work
     distrobox
     distroshelf
-    gearlever
     docker-compose
     bun
     nodejs_24
