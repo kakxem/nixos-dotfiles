@@ -39,6 +39,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    opencode = {
+      url = "github:anomalyco/opencode/v1.2.20";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Hyprland
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 

@@ -2,7 +2,7 @@
 # Home apps (Home-manager level)
 #
 
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   imports = [
@@ -29,7 +29,7 @@
     bun
     nodejs_24
     mission-center
-    opencode
+    inputs.opencode.packages.${pkgs.system}.default
     vscode-fhs
   ];
 }
