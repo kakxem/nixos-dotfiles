@@ -79,6 +79,8 @@ with lib;
 
   home.packages = with pkgs; [
     kdePackages."kdeconnect-kde"
+    kdePackages.qt6ct
+    adw-gtk3
   ];
 
   # Cursor: prefer declarative control via niri-flake/Home Manager.
