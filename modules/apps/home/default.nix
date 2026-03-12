@@ -13,6 +13,7 @@
 
   home.packages = with pkgs; [
     # Personal
+    baobab
     brave
     proton-pass
     protonvpn-gui
