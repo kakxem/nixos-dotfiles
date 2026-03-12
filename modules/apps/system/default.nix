@@ -6,10 +6,12 @@
 
 {
   imports = [
+    ./docker.nix
     ./flatpak.nix
     ./gaming.nix
+    ./libvirt.nix
     ./sunshine.nix
-    ./virtualization.nix
+    ./waydroid.nix
   ];
 
   environment.systemPackages = with pkgs; [
