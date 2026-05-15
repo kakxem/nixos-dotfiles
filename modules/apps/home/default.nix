@@ -16,10 +16,10 @@
     baobab
     brave
     proton-pass
-    protonvpn-gui
+    proton-vpn
     hexchat
     telegram-desktop
-    xorg.xlsclients
+    xlsclients
     vesktop
     anki
 
@@ -30,7 +30,12 @@
     bun
     nodejs_24
     mission-center
-    inputs.opencode.packages.${pkgs.system}.default
+    (inputs.opencode.packages.${pkgs.system}.default.overrideAttrs (old: {
+      preBuild = (old.preBuild or "") + ''
+        substituteInPlace package.json \
+          --replace-fail '"packageManager": "bun@1.3.13"' '"packageManager": "bun@${pkgs.bun.version}"'
+      '';
+    }))
     vscode-fhs
   ];
 }
