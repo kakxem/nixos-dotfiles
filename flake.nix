@@ -64,6 +64,12 @@
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Noctalia
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell/v5";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -105,11 +111,13 @@
               nix.settings = {
                 substituters = [
                   "https://cache.nixos.org"
+                  "https://noctalia.cachix.org"
                 ];
 
                 trusted-public-keys = [
                   # the default public key of cache.nixos.org, it's built-in, no need to add it here
                   "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+                  "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
                 ];
               };
             }
