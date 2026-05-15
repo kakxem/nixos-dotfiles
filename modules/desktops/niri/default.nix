@@ -77,6 +77,9 @@ in
       nautilus
       gnome-system-monitor
       seahorse
+      glib
+      gsettings-desktop-schemas
+      gtk3
     ];
 
     # Solve conflicts with GNOME (and ensure a consistent askpass provider).

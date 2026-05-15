@@ -106,6 +106,23 @@ with lib;
     size = 16;
   };
 
+  gtk = {
+    enable = true;
+    gtk4.theme = null;
+    theme = {
+      package = pkgs.adw-gtk3;
+      name = "adw-gtk3-dark";
+    };
+    iconTheme = {
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+    };
+    font = {
+      name = "Sans";
+      size = 11;
+    };
+  };
+
   # Some upstream modules (e.g. DMS niri includes) expect this path to be a set.
   # If `border` is left as `null`, evaluation fails when selecting `.enable`.
   programs.niri.settings.layout.border.enable = mkDefault false;
