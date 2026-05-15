@@ -10,6 +10,9 @@
       commit.gpgsign = true;
       credential.helper = "libsecret";
     };
-    signing.key = gitKey;
+    signing = {
+      key = gitKey;
+      format = "openpgp";
+    };
   };
 }
