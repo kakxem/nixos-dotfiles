@@ -42,6 +42,8 @@ in
 
     services = {
       gnome.gnome-keyring.enable = true;
+      gvfs.enable = true;
+      udisks2.enable = true;
       xserver = {
         enable = true;
         xkb = {
