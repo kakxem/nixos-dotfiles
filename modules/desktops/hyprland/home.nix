@@ -81,7 +81,7 @@ let
     {
       _args = [
         "CTRL + SPACE"
-        (lua ''hl.dsp.exec_cmd("noctalia msg panel-toggle launcher")'')
+        (lua ''hl.dsp.exec_cmd("vicinae toggle")'')
       ];
     }
     {
@@ -270,6 +270,7 @@ in
           "hyprland.start"
           (lua ''
             function()
+              hl.exec_cmd("vicinae server")
               hl.exec_cmd("noctalia")
               hl.exec_cmd("brave")
               hl.exec_cmd("telegram-desktop")
@@ -357,6 +358,7 @@ in
     # QT theme manager
     libsForQt5.qt5ct
     kdePackages.breeze
+    vicinae
 
     # USB mount
     udiskie
