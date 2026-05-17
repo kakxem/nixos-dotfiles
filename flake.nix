@@ -11,6 +11,9 @@
       # Hyprland
       "https://hyprland.cachix.org"
 
+      # Noctalia
+      "https://noctalia.cachix.org"
+
       # Niri
       "https://niri.cachix.org"
     ];
@@ -22,6 +25,9 @@
 
       # Hyprland
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+
+      # Noctalia
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
 
       # Niri
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
@@ -46,18 +52,6 @@
 
     # Hyprland
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-
-    # DMS
-    dms = {
-      url = "github:AvengeMedia/DankMaterialShell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # DMS plugins (community registry)
-    "dms-plugin-registry" = {
-      url = "github:AvengeMedia/dms-plugin-registry";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # Niri
     niri = {
@@ -101,7 +95,8 @@
           inherit pkgs;
           specialArgs = {
             inherit inputs pkgs-stable;
-          } // vars;
+          }
+          // vars;
 
           modules = [
             # Import cache
@@ -135,7 +130,8 @@
 
           extraSpecialArgs = {
             inherit pkgs inputs pkgs-stable;
-          } // vars;
+          }
+          // vars;
           modules = [
             ./core/home.nix
           ];
