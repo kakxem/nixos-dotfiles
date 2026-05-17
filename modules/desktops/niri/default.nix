@@ -22,6 +22,7 @@ in
     };
 
     networking.networkmanager.enable = true;
+    hardware.bluetooth.enable = true;
 
     networking.firewall.allowedTCPPortRanges = [
       {
@@ -43,6 +44,8 @@ in
     services = {
       gnome.gnome-keyring.enable = true;
       gvfs.enable = true;
+      power-profiles-daemon.enable = true;
+      upower.enable = true;
       udisks2.enable = true;
       xserver = {
         enable = true;
@@ -54,11 +57,6 @@ in
       displayManager.gdm.enable = true;
     };
 
-    programs.dms-shell = {
-      enable = true;
-      package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    };
-
     environment.sessionVariables = {
       XDG_CURRENT_DESKTOP = "niri";
       XDG_SESSION_DESKTOP = "niri";
@@ -68,6 +66,7 @@ in
     };
 
     environment.systemPackages = with pkgs; [
+      inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
       xdg-desktop-portal
       xdg-desktop-portal-gtk
       wl-clipboard

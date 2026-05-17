@@ -23,20 +23,18 @@ lib.mkIf (config.desktop == "hyprland") {
 
     systemPackages = with pkgs; [
       grim
-      ulauncher
       slurp
       swappy
       xdg-desktop-portal
       wl-clipboard
       wlr-randr
       libnotify
-      swaynotificationcenter
-      hyprpaper
       eog
       nautilus
       pavucontrol
       gnome-software
       gnome-system-monitor
+      inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
   };
 
@@ -51,6 +49,8 @@ lib.mkIf (config.desktop == "hyprland") {
   security.pam.services.gdm.enableGnomeKeyring = true;
   services = {
     gnome.gnome-keyring.enable = true;
+    power-profiles-daemon.enable = true;
+    upower.enable = true;
     xserver = {
       enable = true;
 
@@ -75,6 +75,9 @@ lib.mkIf (config.desktop == "hyprland") {
     # Enable pipewire
     pulseaudio.enable = false;
   };
+
+  hardware.bluetooth.enable = true;
+  networking.networkmanager.enable = true;
 
   xdg.portal = {
     # Required for flatpak with window managers and for file browsing
