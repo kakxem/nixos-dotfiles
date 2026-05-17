@@ -30,6 +30,25 @@ with lib;
     };
   };
 
+  systemd.user.services.vicinae = {
+    Unit = {
+      Description = "Vicinae launcher";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart = "${pkgs.vicinae}/bin/vicinae server";
+      Environment = [ "USE_LAYER_SHELL=1" ];
+      Restart = "on-failure";
+      RestartSec = 1;
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
   xdg.configFile."noctalia/config.toml".text = ''
     [shell]
     telemetry_enabled = false
@@ -47,6 +66,7 @@ with lib;
     kdePackages."kdeconnect-kde"
     kdePackages.qt6ct
     adw-gtk3
+    vicinae
   ];
 
   # Cursor: prefer declarative control via niri-flake/Home Manager.
@@ -96,7 +116,7 @@ with lib;
   programs.niri.settings.binds = {
     "Ctrl+Space" = {
       hotkey-overlay.title = "Launcher";
-      action.spawn = [ "noctalia" "msg" "panel-toggle" "launcher" ];
+      action.spawn = [ "vicinae" "toggle" ];
     };
 
     "Mod+F".action.maximize-column = [ ];
