@@ -35,6 +35,13 @@
     };
   };
 
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.adwaita-icon-theme;
+    name = "Adwaita";
+    size = 16;
+  };
+
   dconf.settings = {
     "org/gnome/shell" = {
       favorite-apps = [
@@ -62,6 +69,7 @@
       enable-hot-corners = true;
       clock-show-weekday = true;
       gtk-theme = "adw-gtk3-dark";
+      cursor-size = 16;
     };
     "org/gnome/desktop/privacy" = {
       report-technical-problems = "false";
