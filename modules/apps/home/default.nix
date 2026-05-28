@@ -32,8 +32,7 @@
     mission-center
     (inputs.opencode.packages.${pkgs.system}.default.overrideAttrs (old: {
       preBuild = (old.preBuild or "") + ''
-        substituteInPlace package.json \
-          --replace-fail '"packageManager": "bun@1.3.13"' '"packageManager": "bun@${pkgs.bun.version}"'
+        sed -i -E 's#"packageManager": "bun@[^"]+"#"packageManager": "bun@${pkgs.bun.version}"#' package.json
       '';
     }))
     vscode-fhs
