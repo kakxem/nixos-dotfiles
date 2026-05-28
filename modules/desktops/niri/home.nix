@@ -30,22 +30,14 @@ with lib;
     };
   };
 
-  systemd.user.services.vicinae = {
-    Unit = {
-      Description = "Vicinae launcher";
-      PartOf = [ "graphical-session.target" ];
-      After = [ "graphical-session.target" ];
-    };
-
-    Service = {
-      ExecStart = "${pkgs.vicinae}/bin/vicinae server";
-      Environment = [ "USE_LAYER_SHELL=1" ];
-      Restart = "on-failure";
-      RestartSec = 1;
-    };
-
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
+  services.vicinae = {
+    enable = true;
+    systemd = {
+      enable = true;
+      autoStart = true;
+      environment = {
+        USE_LAYER_SHELL = 1;
+      };
     };
   };
 
@@ -66,7 +58,6 @@ with lib;
     kdePackages."kdeconnect-kde"
     kdePackages.qt6ct
     adw-gtk3
-    vicinae
   ];
 
   # Cursor: prefer declarative control via niri-flake/Home Manager.
