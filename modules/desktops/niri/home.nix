@@ -39,6 +39,10 @@ with lib;
         USE_LAYER_SHELL = 1;
       };
     };
+    extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
+      nix
+      niri
+    ];
   };
 
   xdg.configFile."noctalia/config.toml".text = ''
