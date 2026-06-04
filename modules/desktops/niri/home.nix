@@ -60,6 +60,7 @@ with lib;
 
   home.packages = with pkgs; [
     kdePackages."kdeconnect-kde"
+    loupe
     kdePackages.qt6ct
     adw-gtk3
   ];
@@ -113,6 +114,26 @@ with lib;
       hotkey-overlay.title = "Launcher";
       action.spawn = [ "vicinae" "toggle" ];
     };
+
+    "Print".action.spawn = [
+      "sh"
+      "-c"
+      ''
+        mkdir -p "$HOME/Pictures"
+        filename="$HOME/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png"
+        grim -g "$(slurp)" - | swappy -f - -o "$filename" && notify-send "Saved to $filename"
+      ''
+    ];
+
+    "Ctrl+Print".action.spawn = [
+      "sh"
+      "-c"
+      ''
+        mkdir -p "$HOME/Pictures"
+        filename="$HOME/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png"
+        grim "$filename" && notify-send "Saved to $filename"
+      ''
+    ];
 
     "Mod+F".action.maximize-column = [ ];
     "Mod+Shift+F".action.fullscreen-window = [ ];
