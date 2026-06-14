@@ -15,6 +15,7 @@
     enable = true;
     defaultApplications = {
       "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
+      "application/pdf" = [ "org.gnome.Papers.desktop" ];
       "x-directory/normal" = [ "org.gnome.Nautilus.desktop" ];
       "x-scheme-handler/http" = [ "brave-browser.desktop" ];
       "x-scheme-handler/https" = [ "brave-browser.desktop" ];
@@ -29,6 +30,7 @@
     proton-vpn
     hexchat
     telegram-desktop
+    papers
     xlsclients
     vesktop
     anki
