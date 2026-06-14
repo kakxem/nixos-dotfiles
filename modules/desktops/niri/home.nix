@@ -187,7 +187,7 @@ with lib;
     "XF86MonBrightnessDown".action.spawn = [ "noctalia" "msg" "lower-brightness" ];
   };
 
-  programs.niri.settings.outputs."HDMI-A-1".mode = {
+  programs.niri.settings.outputs."DP-3".mode = {
     width = 3840;
     height = 2160;
     refresh = 120.0;
