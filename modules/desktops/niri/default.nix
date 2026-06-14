@@ -83,6 +83,7 @@ in
       swappy
       xdg-desktop-portal
       xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
       wl-clipboard
       libnotify
       # Niri can automatically spawn Xwayland via xwayland-satellite when it's in $PATH.
@@ -101,7 +102,7 @@ in
 
     xdg.portal = {
       enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-wlr ];
     };
   };
 }
