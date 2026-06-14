@@ -30,6 +30,24 @@ with lib;
     };
   };
 
+  systemd.user.services.noctalia = {
+    Unit = {
+      Description = "Noctalia Shell";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart = "${inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/noctalia";
+      Restart = "on-failure";
+      RestartSec = 1;
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
   services.vicinae = {
     enable = true;
     systemd = {
@@ -105,9 +123,8 @@ with lib;
     };
   };
 
-  programs.niri.settings.spawn-at-startup = [
-    { command = [ "noctalia" ]; }
-  ];
+  # Supervise Noctalia with systemd so it comes back after its known crashes.
+  programs.niri.settings.spawn-at-startup = [ ];
 
   programs.niri.settings.binds = {
     "Ctrl+Space" = {
