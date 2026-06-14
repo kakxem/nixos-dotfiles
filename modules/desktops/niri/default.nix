@@ -90,7 +90,6 @@ in
       xwayland-satellite
       kdePackages."kdeconnect-kde"
       nautilus
-      gnome-system-monitor
       seahorse
       glib
       gsettings-desktop-schemas
