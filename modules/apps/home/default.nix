@@ -32,6 +32,9 @@
     telegram-desktop
     papers
     xlsclients
+    (discord.override {
+      withVencord = true;
+    })
     vesktop
     anki
 
