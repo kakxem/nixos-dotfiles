@@ -32,7 +32,7 @@ The configuration is designed to be highly modular and easy to customize:
 │   │   ├── system/       # Core OS (Boot, Users, Locale, etc.)
 │   │   ├── hardware/     # Drivers & Generated hardware configs
 │   │   └── services/     # System services, Fonts & Rebuild scripts
-│   └── desktops/         # Desktop-specific modules (GNOME, Hyprland, KDE)
+│   └── desktops/         # Desktop-specific modules (GNOME, Hyprland, KDE, Niri)
 ├── scripts/
 │   └── install.sh        # Initial installation script
 └── wallpapers/           # System wallpapers
@@ -70,13 +70,13 @@ The system provides two convenience commands to apply changes:
 - **`rebuild-system`**: Rebuilds the NixOS system configuration (requires sudo).
 - **`rebuild-home`**: Rebuilds the Home Manager configuration (standalone, no sudo required).
 
-*Note: This repository uses a **Flake-based standalone** setup for Home Manager. The `home-manager` CLI is installed system-wide during `rebuild-system`, so `rebuild-home` works immediately after the system is installed.*
+*Note: This repository uses a **Flake-based standalone** setup for Home Manager. The `home-manager` CLI is installed system-wide during `rebuild-system`, so `rebuild-home` works immediately after the system is installed. `rebuild-home` runs `home-manager switch -b backup`, so replaced Home Manager files are backed up with the `backup` extension.*
 
 ### Switching Desktops
 The desktop environment is managed through the `desktop` variable in `vars.nix`. 
 
 To switch environments:
-1.  Edit `vars.nix` and set `desktop` to one of: `"gnome"`, `"hyprland"`, `"kde"`, or `"cosmic"`.
+1.  Edit `vars.nix` and set `desktop` to one of: `"gnome"`, `"hyprland"`, `"kde"`, `"cosmic"`, or `"niri"`.
 2.  Run the rebuild scripts to apply changes:
 
 ```bash
@@ -98,4 +98,5 @@ home-manager switch --flake .#kakxem
 - **GNOME**: Stable and feature-complete.
 - **Hyprland**: Highly customized Wayland compositor.
 - **KDE Plasma**: Modern desktop experience (WIP).
-- **COSMIC**: Next-gen Rust-based desktop (WIP).
+- **Niri**: Scrollable-tiling Wayland compositor.
+- **COSMIC**: Next-gen Rust-based desktop (WIP, module currently disabled).
