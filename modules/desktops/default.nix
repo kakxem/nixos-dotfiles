@@ -7,7 +7,7 @@
 
 {
   options.desktop = lib.mkOption {
-    type = lib.types.enum [ "gnome" "hyprland" "kde" "cosmic" "niri" ];
+    type = lib.types.enum [ "gnome" "hyprland" "kde" "niri" ];
     default = "gnome";
     description = "Desktop environment to use";
   };
@@ -17,6 +17,5 @@
     ./hyprland/default.nix
     ./kde/default.nix
     ./niri/default.nix
-    # ./cosmic/default.nix
   ];
 }

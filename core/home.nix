@@ -9,7 +9,6 @@ let
     gnome = [ ../modules/desktops/gnome/home.nix ];
     hyprland = [ ../modules/desktops/hyprland/home.nix ];
     kde = [ ];
-    cosmic = [ ];
     niri = [ ../modules/desktops/niri/home.nix ];
   };
 in
