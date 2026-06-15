@@ -2,13 +2,14 @@
 # Home apps (Home-manager level)
 #
 
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
     ./terminal
     ./editors
     ./media
+    ./opencode
   ];
 
   xdg.mimeApps = {
@@ -45,11 +46,6 @@
     bun
     nodejs_24
     mission-center
-    (inputs.opencode.packages.${pkgs.system}.default.overrideAttrs (old: {
-      preBuild = (old.preBuild or "") + ''
-        sed -i -E 's#"packageManager": "bun@[^"]+"#"packageManager": "bun@${pkgs.bun.version}"#' package.json
-      '';
-    }))
     vscode-fhs
   ];
 }
