@@ -6,7 +6,7 @@ This repository contains a modular NixOS configuration managed as a **Flake**. I
 ## How it Works
 The configuration is designed to be highly modular and easy to customize:
 
-1.  **Centralized Variables (`vars.nix`)**: All user-specific info (name, email) and system toggles (architecture, desktop environment) are defined here.
+1.  **Centralized Variables (`vars.nix`)**: All user-specific info (name, email) and system toggles (architecture, desktop environment, GPU vendor) are defined here.
 2.  **SpecialArgs**: These variables are passed from `flake.nix` to every module, allowing them to adapt dynamically (e.g., using `${user}` and `${desktop}` everywhere).
 3.  **Modular Structure**:
     - **`core/`**: The entry points. `system.nix` defines the OS structure, and `home.nix` defines the user environment.
@@ -56,10 +56,18 @@ exit
 # Go to dotfiles
 cd ~/.config/nixos-dotfiles
 
+# Review vars.nix and adjust the user, Git identity, system, and desktop before installing
+$EDITOR vars.nix
+
 # Give execution permission and run the install script
 sudo chmod +x ./scripts/install.sh
 sudo ./scripts/install.sh
+
+# Reboot into the new system generation
+reboot
 ```
+
+The installer shows the current `vars.nix` values, asks for confirmation, installs the system generation for the next boot, and activates Home Manager with backups. It does not switch the live system, so rebooting is required to complete the installation.
 
 ---
 
@@ -76,13 +84,24 @@ The system provides two convenience commands to apply changes:
 The desktop environment is managed through the `desktop` variable in `vars.nix`. 
 
 To switch environments:
-1.  Edit `vars.nix` and set `desktop` to one of: `"gnome"`, `"hyprland"`, `"kde"`, `"cosmic"`, or `"niri"`.
+1.  Edit `vars.nix` and set `desktop` to one of: `"gnome"`, `"hyprland"`, `"kde"`, or `"niri"`.
 2.  Run the rebuild scripts to apply changes:
 
 ```bash
 rebuild-system
 rebuild-home
 ```
+
+### Hardware Selection
+The GPU vendor is managed through the `gpu` variable in `vars.nix`.
+
+Set `gpu` to one of: `"amd"`, `"nvidia"`, `"nvidia-open"`, `"intel"`, or `"none"`.
+
+- `"amd"`: enables AMDGPU early KMS and AMD-specific tools like LACT.
+- `"nvidia"`: enables the proprietary NVIDIA driver with modesetting.
+- `"nvidia-open"`: enables the open NVIDIA kernel module with modesetting for supported newer GPUs.
+- `"intel"`: enables the modesetting driver and Intel media acceleration packages.
+- `"none"`: skips vendor-specific GPU configuration.
 
 ### Manual Rebuild
 You can also use the standard Nix commands:
@@ -91,12 +110,11 @@ You can also use the standard Nix commands:
 sudo nixos-rebuild switch --flake .#system
 
 # Home Manager rebuild
-home-manager switch --flake .#kakxem
+home-manager switch --flake .#<user-from-vars.nix>
 ```
 
 ## Available Desktops
 - **GNOME**: Stable and feature-complete.
 - **Hyprland**: Highly customized Wayland compositor.
-- **KDE Plasma**: Modern desktop experience (WIP).
+- **KDE Plasma**: Modern desktop experience.
 - **Niri**: Scrollable-tiling Wayland compositor.
-- **COSMIC**: Next-gen Rust-based desktop (WIP, module currently disabled).
