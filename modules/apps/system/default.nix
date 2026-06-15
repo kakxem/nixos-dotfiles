@@ -6,6 +6,7 @@
 
 {
   imports = [
+    ./appimage.nix
     ./docker.nix
     ./flatpak.nix
     ./gaming.nix
