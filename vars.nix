@@ -7,5 +7,6 @@
 
   # System Settings
   system = "x86_64-linux";
-  desktop = "niri"; # Possible options: "gnome", "hyprland", "kde", "cosmic", "niri"
+  desktop = "niri"; # Possible options: "gnome", "hyprland", "kde", "niri"
+  gpu = "amd"; # Possible options: "amd", "nvidia", "nvidia-open", "intel", "none"
 }

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, gpu, ... }:
 
 let
   rocmSmi = pkgs.rocmPackages.rocm-smi;
@@ -12,7 +12,7 @@ in
 {
   programs.btop = {
     enable = true;
-    package = btopWithAmdGpu;
+    package = if gpu == "amd" then btopWithAmdGpu else pkgs.btop;
     settings = {
       shown_boxes = "cpu mem net proc gpu0";
       show_gpu_info = "On";

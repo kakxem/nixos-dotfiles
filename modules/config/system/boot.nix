@@ -34,6 +34,4 @@
     ];
   };
 
-  # Enable early KMS for AMDGPU
-  hardware.amdgpu.initrd.enable = true;
 }

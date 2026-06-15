@@ -2,19 +2,35 @@
 # Gaming
 #
 
-{ pkgs, ... }:
+{ lib, pkgs, gpu, ... }:
 
+let
+  nvtopPackage =
+    {
+      amd = pkgs.nvtopPackages.amd;
+      nvidia = pkgs.nvtopPackages.nvidia;
+      nvidia-open = pkgs.nvtopPackages.nvidia;
+      intel = pkgs.nvtopPackages.intel;
+    }
+    .${gpu} or null;
+in
 {
-  environment.systemPackages = with pkgs; [
-    wineWow64Packages.base
+  environment.systemPackages =
+    with pkgs;
+    [
+      wineWow64Packages.base
 
-    # Tools
-    r2modman
-    mangohud
-    lact
-    amdgpu_top
-    gamescope
-  ];
+      # Tools
+      r2modman
+      mangohud
+      gamescope
+    ]
+    ++ lib.optionals (nvtopPackage != null) [
+      nvtopPackage
+    ]
+    ++ lib.optionals (gpu == "amd") [
+      lact
+    ];
 
   environment.variables = {
     PROTON_ENABLE_WAYLAND = 1;
@@ -46,7 +62,7 @@
         general = {
           renice = 4;
         };
-        gpu = {
+        gpu = lib.mkIf (gpu == "amd") {
           apply_gpu_optimisations = "accept-responsibility";
           gpu_device = 0;
           amd_performance_level = "high";
@@ -56,5 +72,5 @@
   };
 
   hardware.xone.enable = true; # Xbox controller support
-  services.lact.enable = true; # Enable lact
+  services.lact.enable = gpu == "amd"; # Enable lact
 }
