@@ -81,6 +81,7 @@ with lib;
     loupe
     kdePackages.qt6ct
     adw-gtk3
+    playerctl
   ];
 
   # Cursor: prefer declarative control via niri-flake/Home Manager.
@@ -183,6 +184,10 @@ with lib;
     "XF86AudioRaiseVolume".action.spawn = [ "noctalia" "msg" "volume-increase" ];
     "XF86AudioLowerVolume".action.spawn = [ "noctalia" "msg" "volume-decrease" ];
     "XF86AudioMute".action.spawn = [ "noctalia" "msg" "volume-mute-output" ];
+    "XF86AudioPlay".action.spawn = [ "playerctl" "play-pause" ];
+    "XF86AudioPause".action.spawn = [ "playerctl" "play-pause" ];
+    "XF86AudioNext".action.spawn = [ "playerctl" "next" ];
+    "XF86AudioPrev".action.spawn = [ "playerctl" "previous" ];
     "XF86MonBrightnessUp".action.spawn = [ "noctalia" "msg" "raise-brightness" ];
     "XF86MonBrightnessDown".action.spawn = [ "noctalia" "msg" "lower-brightness" ];
   };
