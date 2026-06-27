@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   # Security
@@ -8,5 +8,15 @@
     enable = true;
     enableSSHSupport = false;
   };
-  services.pcscd.enable = true;
+  services.pcscd = {
+    enable = true;
+    plugins = [ pkgs.ccid ];
+  };
+
+  environment.systemPackages = with pkgs; [
+    opensc
+    nssTools
+    pcsc-tools
+    usbutils
+  ];
 }
