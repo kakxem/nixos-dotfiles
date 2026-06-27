@@ -48,7 +48,7 @@ with lib;
     };
   };
 
-  services.vicinae = {
+  programs.vicinae = {
     enable = true;
     systemd = {
       enable = true;
@@ -67,13 +67,41 @@ with lib;
     [shell]
     telemetry_enabled = false
     polkit_agent = false
+    settings_show_advanced = true
 
     [shell.panel]
     attach_control_center = true
     attach_wallpaper = true
 
+    [shell.animation]
+    speed = 0.4
+
     [notification]
     enable_daemon = true
+
+    [bar.default]
+    center = [ "notifications", "clock", "media", "audio_visualizer", "volume" ]
+    end = [ "tray", "network", "bluetooth", "session" ]
+    margin_edge = 0
+    margin_ends = 0
+    radius = 0
+    shadow = false
+    start = [ "launcher", "active_window" ]
+    widget_spacing = 15
+
+    [dock]
+    enabled = true
+    auto_hide = true
+    launcher_position = "start"
+    show_dots = true
+    reserve_space = false
+
+    [theme]
+    builtin = "Dracula"
+    community_palette = "Catppuccin Lavender"
+
+    [theme.templates]
+    community_ids = [ "telegram" ]
   '';
 
   home.packages = with pkgs; [

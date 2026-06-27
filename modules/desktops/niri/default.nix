@@ -11,17 +11,6 @@ let
 in
 {
   config = mkIf (cfg == "niri") {
-    security.pam.services."gdm-launch-environment".rules.session.env-greeter = {
-      order = config.security.pam.services."gdm-launch-environment".rules.session.env.order + 50;
-      control = "required";
-      modulePath = "${config.security.pam.package}/lib/security/pam_env.so";
-      settings.conffile = pkgs.writeText "gdm-launch-environment-env.conf" ''
-        PATH          DEFAULT="''${PATH}:${pkgs.gnome-session}/bin"
-        XDG_DATA_DIRS DEFAULT="''${XDG_DATA_DIRS}:${config.services.displayManager.generic.environment.XDG_DATA_DIRS}"
-      '';
-      settings.readenv = 0;
-    };
-
     programs.niri = {
       enable = true;
       package = pkgs.niri;
