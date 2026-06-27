@@ -9,7 +9,6 @@
     ./terminal
     ./editors
     ./media
-    ./opencode
   ];
 
   xdg.mimeApps = {
