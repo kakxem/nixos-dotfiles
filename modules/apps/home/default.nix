@@ -9,6 +9,7 @@
     ./terminal
     ./editors
     ./media
+    ./gaming
   ];
 
   xdg.mimeApps = {
