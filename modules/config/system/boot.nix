@@ -34,4 +34,8 @@
     ];
   };
 
+  # Temporary workaround for linux_zen installing vmlinuz instead of bzImage:
+  # https://github.com/NixOS/nixpkgs/issues/535850
+  system.boot.loader.kernelFile = "vmlinuz";
+
 }
