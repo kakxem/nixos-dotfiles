@@ -10,6 +10,7 @@
       FLAKE_OUTPUT="system"
       KEEP_GENERATIONS=5
       CLEAN_MODE="ask"
+      REBUILD_ACTION="switch"
       ORIGINAL_ARGS=("$@")
 
       section() {
@@ -42,11 +43,12 @@
       }
 
       usage() {
-        echo "Usage: rebuild-system [--yes|--no-clean]"
+        echo "Usage: rebuild-system [--boot] [--yes|--no-clean]"
+        echo "  --boot      Build and register the system for next boot instead of switching live"
         echo "  --yes       Prune old generations and run GC without asking"
         echo "  --no-clean  Skip generation pruning and GC"
         echo
-        echo "Default: ask after a successful rebuild."
+        echo "Default: switch live, then ask after a successful rebuild."
       }
 
       while [ "$#" -gt 0 ]; do
@@ -56,6 +58,9 @@
             ;;
           --no-clean)
             CLEAN_MODE="no"
+            ;;
+          --boot)
+            REBUILD_ACTION="boot"
             ;;
           --help|-h)
             usage
@@ -132,8 +137,13 @@
       section "NixOS Rebuild"
       info "Flake: $FLAKE_PATH#$FLAKE_OUTPUT"
       info "Cleanup mode: $CLEAN_MODE"
-      info "Starting system switch..."
-      ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake "$FLAKE_PATH#$FLAKE_OUTPUT"
+      if [ "$REBUILD_ACTION" = "boot" ]; then
+        info "Starting system boot rebuild..."
+        ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake "$FLAKE_PATH#$FLAKE_OUTPUT"
+      else
+        info "Starting system switch..."
+        ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake "$FLAKE_PATH#$FLAKE_OUTPUT"
+      fi
       success "System rebuild finished."
 
       section "Cleanup"
@@ -275,8 +285,10 @@
       section "Home Manager Rebuild"
       info "Flake: $FLAKE_PATH#$FLAKE_OUTPUT"
       info "Cleanup mode: $CLEAN_MODE"
+      BACKUP_EXTENSION="backup-$(${pkgs.coreutils}/bin/date +%Y%m%d-%H%M%S)-$$"
+      info "Backup extension: $BACKUP_EXTENSION"
       info "Starting Home Manager switch..."
-      ${pkgs.home-manager}/bin/home-manager switch -b backup --flake "$FLAKE_PATH#$FLAKE_OUTPUT"
+      ${pkgs.home-manager}/bin/home-manager switch -b "$BACKUP_EXTENSION" --flake "$FLAKE_PATH#$FLAKE_OUTPUT"
       success "Home Manager rebuild finished."
 
       section "Cleanup"
