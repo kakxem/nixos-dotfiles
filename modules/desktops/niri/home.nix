@@ -71,7 +71,7 @@ with lib;
 
     [shell.panel]
     attach_control_center = true
-    attach_wallpaper = true
+    attach_wallpaper = false
 
     [shell.animation]
     speed = 0.4
@@ -133,6 +133,11 @@ with lib;
     package = pkgs.adwaita-icon-theme;
     name = "Adwaita";
     size = 16;
+  };
+
+  dconf = {
+    enable = true;
+    settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
   };
 
   gtk = {
@@ -220,13 +225,28 @@ with lib;
     "XF86MonBrightnessDown".action.spawn = [ "noctalia" "msg" "lower-brightness" ];
   };
 
-  programs.niri.settings.outputs."DP-3".mode = {
-    width = 3840;
-    height = 2160;
-    refresh = 120.0;
+  programs.niri.settings.outputs = {
+    "DP-3" = {
+      mode = {
+        width = 3840;
+        height = 2160;
+        refresh = 120.0;
+      };
+      variable-refresh-rate = false;
+    };
+
+    "HDMI-A-1" = {
+      mode = {
+        width = 3840;
+        height = 2160;
+        refresh = 120.0;
+      };
+      variable-refresh-rate = false;
+    };
   };
 
   programs.niri.settings.layout = {
+    background-color = "#000000";
     gaps = 4;
     border = {
       enable = true;
