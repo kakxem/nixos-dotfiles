@@ -8,7 +8,7 @@ let
   desktopHomeModules = {
     gnome = [ ../modules/desktops/gnome/home.nix ];
     hyprland = [ ../modules/desktops/hyprland/home.nix ];
-    kde = [ ];
+    kde = [ ../modules/desktops/kde/home.nix ];
     niri = [ ../modules/desktops/niri/home.nix ];
   };
 in

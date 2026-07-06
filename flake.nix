@@ -50,6 +50,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    plasma-manager = {
+      url = "git+https://github.com/nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     # Hyprland
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
@@ -140,6 +146,7 @@
           // vars;
           modules = [
             inputs.vicinae.homeManagerModules.default
+            inputs.plasma-manager.homeModules.plasma-manager
             ./core/home.nix
           ];
         };

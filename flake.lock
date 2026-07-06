@@ -618,6 +618,29 @@
         "type": "github"
       }
     },
+    "plasma-manager": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775856943,
+        "narHash": "sha256-b7Mp7P+q2Md5AGt4rjHfMcBykzMumFTen10ST++AuTU=",
+        "ref": "refs/heads/trunk",
+        "rev": "a524a6160e6df89f7673ba293cf7d78b559eb1a5",
+        "revCount": 312,
+        "type": "git",
+        "url": "https://github.com/nix-community/plasma-manager"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/nix-community/plasma-manager"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -650,6 +673,7 @@
         "nixpkgs-stable": "nixpkgs-stable_2",
         "noctalia": "noctalia",
         "opencode": "opencode",
+        "plasma-manager": "plasma-manager",
         "vicinae": "vicinae",
         "vicinae-extensions": "vicinae-extensions"
       }
