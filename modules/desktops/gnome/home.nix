@@ -39,7 +39,7 @@
     gtk.enable = true;
     package = pkgs.adwaita-icon-theme;
     name = "Adwaita";
-    size = 16;
+    size = 24;
   };
 
   dconf.settings = {
@@ -69,7 +69,7 @@
       enable-hot-corners = true;
       clock-show-weekday = true;
       gtk-theme = "adw-gtk3-dark";
-      cursor-size = 16;
+      cursor-size = 24;
     };
     "org/gnome/desktop/privacy" = {
       report-technical-problems = "false";
@@ -84,6 +84,7 @@
     "org/gnome/desktop/wm/preferences" = {
       num-workspaces = 6;
       focus-mode = "sloppy";
+      button-layout = ":close";
     };
     "org/gnome/desktop/peripherals/mouse" = {
       accle-profile = "flat";
