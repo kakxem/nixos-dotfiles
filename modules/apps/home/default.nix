@@ -6,6 +6,7 @@
 
 {
   imports = [
+    ./autostart.nix
     ./terminal
     ./editors
     ./media
