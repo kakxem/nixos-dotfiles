@@ -33,7 +33,6 @@ lib.mkIf (config.desktop == "hyprland") {
       nautilus
       pavucontrol
       gnome-software
-      inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
   };
 

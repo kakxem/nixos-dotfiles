@@ -10,6 +10,7 @@ with lib;
 {
   imports = [
     inputs.niri.homeModules.niri
+    ../../apps/home/noctalia.nix
   ];
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
@@ -21,24 +22,6 @@ with lib;
 
     Service = {
       ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-      Restart = "on-failure";
-      RestartSec = 1;
-    };
-
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-  };
-
-  systemd.user.services.noctalia = {
-    Unit = {
-      Description = "Noctalia Shell";
-      PartOf = [ "graphical-session.target" ];
-      After = [ "graphical-session.target" ];
-    };
-
-    Service = {
-      ExecStart = "${inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/noctalia";
       Restart = "on-failure";
       RestartSec = 1;
     };
@@ -62,47 +45,6 @@ with lib;
       niri
     ];
   };
-
-  xdg.configFile."noctalia/config.toml".text = ''
-    [shell]
-    telemetry_enabled = false
-    polkit_agent = false
-    settings_show_advanced = true
-
-    [shell.panel]
-    attach_control_center = true
-    attach_wallpaper = false
-
-    [shell.animation]
-    speed = 0.4
-
-    [notification]
-    enable_daemon = true
-
-    [bar.default]
-    center = [ "notifications", "clock", "media", "audio_visualizer", "volume" ]
-    end = [ "tray", "network", "bluetooth", "session" ]
-    margin_edge = 0
-    margin_ends = 0
-    radius = 0
-    shadow = false
-    start = [ "launcher", "active_window" ]
-    widget_spacing = 15
-
-    [dock]
-    enabled = true
-    auto_hide = true
-    launcher_position = "start"
-    show_dots = true
-    reserve_space = false
-
-    [theme]
-    builtin = "Dracula"
-    community_palette = "Catppuccin Lavender"
-
-    [theme.templates]
-    community_ids = [ "telegram" ]
-  '';
 
   home.packages = with pkgs; [
     kdePackages."kdeconnect-kde"

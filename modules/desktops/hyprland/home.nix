@@ -7,7 +7,7 @@
   pkgs,
   user,
   ...
-}:
+  }:
 
 let
   lua = lib.generators.mkLuaInline;
@@ -240,6 +240,8 @@ let
 
 in
 {
+  imports = [ ../../apps/home/noctalia.nix ];
+
   # Hyprland config
   wayland.windowManager.hyprland = {
     enable = true;
@@ -271,7 +273,6 @@ in
           (lua ''
             function()
               hl.exec_cmd("vicinae server")
-              hl.exec_cmd("noctalia")
               hl.exec_cmd("brave")
               hl.exec_cmd("telegram-desktop")
               hl.exec_cmd("vesktop")
