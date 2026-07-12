@@ -55,6 +55,7 @@ in
         };
       };
       displayManager.gdm.enable = true;
+      displayManager.defaultSession = "niri";
     };
 
     environment.sessionVariables = {

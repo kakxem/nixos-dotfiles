@@ -64,8 +64,11 @@ with lib;
   # Enable Num Lock by default (niri input.keyboard.numlock).
   programs.niri.settings.input.keyboard.numlock = mkDefault true;
 
-  # Focus follows mouse (hover-to-focus).
-  programs.niri.settings.input.focus-follows-mouse.enable = mkDefault false;
+  # Focus on hover, but do not scroll the workspace to reach the window.
+  programs.niri.settings.input.focus-follows-mouse = {
+    enable = true;
+    max-scroll-amount = "10%";
+  };
 
   # Disable mouse acceleration.
   programs.niri.settings.input.mouse.accel-profile = mkDefault "flat";
@@ -103,7 +106,7 @@ with lib;
   programs.niri.settings.spawn-at-startup = [ ];
 
   programs.niri.settings.binds = {
-    "Ctrl+Space" = {
+    "Mod+Space" = {
       hotkey-overlay.title = "Launcher";
       action.spawn = [ "vicinae" "toggle" ];
     };
@@ -129,6 +132,7 @@ with lib;
     ];
 
     "Mod+F".action.maximize-column = [ ];
+    "Mod+R".action.set-column-width = "50%";
     "Mod+Shift+F".action.fullscreen-window = [ ];
     "Mod+V".action.toggle-window-floating = [ ];
     "Mod+Shift+V".action.switch-focus-between-floating-and-tiling = [ ];
