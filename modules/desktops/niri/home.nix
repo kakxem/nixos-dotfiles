@@ -74,6 +74,7 @@ with lib;
   programs.niri.settings.input.mouse.accel-profile = mkDefault "flat";
 
   home.pointerCursor = {
+    enable = true;
     gtk.enable = true;
     package = pkgs.adwaita-icon-theme;
     name = "Adwaita";
