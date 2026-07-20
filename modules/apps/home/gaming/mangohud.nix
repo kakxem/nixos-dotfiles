@@ -76,7 +76,7 @@
     show_fps_limit
     fps_limit_method=late
     toggle_fps_limit=Shift_L+F1
-    fps_limit=0
+    fps_limit=125,110,58,0
     #offset=0
     resolution
     refresh_rate

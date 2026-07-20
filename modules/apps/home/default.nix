@@ -37,7 +37,6 @@
     (discord.override {
       withVencord = true;
     })
-    vesktop
     anki
 
     # Work
