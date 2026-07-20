@@ -108,7 +108,10 @@ with lib;
   programs.niri.settings.binds = {
     "Mod+Space" = {
       hotkey-overlay.title = "Launcher";
-      action.spawn = [ "vicinae" "toggle" ];
+      action.spawn = [
+        "vicinae"
+        "toggle"
+      ];
     };
 
     "Print".action.spawn = [
@@ -137,8 +140,17 @@ with lib;
     "Mod+V".action.toggle-window-floating = [ ];
     "Mod+Shift+V".action.switch-focus-between-floating-and-tiling = [ ];
 
-    "Mod+S".action.spawn = [ "noctalia" "msg" "panel-toggle" "control-center" ];
-    "Mod+Comma".action.spawn = [ "noctalia" "msg" "settings-toggle" ];
+    "Mod+S".action.spawn = [
+      "noctalia"
+      "msg"
+      "panel-toggle"
+      "control-center"
+    ];
+    "Mod+Comma".action.spawn = [
+      "noctalia"
+      "msg"
+      "settings-toggle"
+    ];
 
     "Mod+WheelScrollDown" = {
       cooldown-ms = 150;
@@ -160,15 +172,47 @@ with lib;
       action.focus-workspace-up = [ ];
     };
 
-    "XF86AudioRaiseVolume".action.spawn = [ "noctalia" "msg" "volume-increase" ];
-    "XF86AudioLowerVolume".action.spawn = [ "noctalia" "msg" "volume-decrease" ];
-    "XF86AudioMute".action.spawn = [ "noctalia" "msg" "volume-mute-output" ];
-    "XF86AudioPlay".action.spawn = [ "playerctl" "play-pause" ];
-    "XF86AudioPause".action.spawn = [ "playerctl" "play-pause" ];
-    "XF86AudioNext".action.spawn = [ "playerctl" "next" ];
-    "XF86AudioPrev".action.spawn = [ "playerctl" "previous" ];
-    "XF86MonBrightnessUp".action.spawn = [ "noctalia" "msg" "raise-brightness" ];
-    "XF86MonBrightnessDown".action.spawn = [ "noctalia" "msg" "lower-brightness" ];
+    "XF86AudioRaiseVolume".action.spawn = [
+      "noctalia"
+      "msg"
+      "volume-increase"
+    ];
+    "XF86AudioLowerVolume".action.spawn = [
+      "noctalia"
+      "msg"
+      "volume-decrease"
+    ];
+    "XF86AudioMute".action.spawn = [
+      "noctalia"
+      "msg"
+      "volume-mute-output"
+    ];
+    "XF86AudioPlay".action.spawn = [
+      "playerctl"
+      "play-pause"
+    ];
+    "XF86AudioPause".action.spawn = [
+      "playerctl"
+      "play-pause"
+    ];
+    "XF86AudioNext".action.spawn = [
+      "playerctl"
+      "next"
+    ];
+    "XF86AudioPrev".action.spawn = [
+      "playerctl"
+      "previous"
+    ];
+    "XF86MonBrightnessUp".action.spawn = [
+      "noctalia"
+      "msg"
+      "raise-brightness"
+    ];
+    "XF86MonBrightnessDown".action.spawn = [
+      "noctalia"
+      "msg"
+      "lower-brightness"
+    ];
   };
 
   programs.niri.settings.outputs = {
@@ -211,6 +255,7 @@ with lib;
 
   programs.niri.settings.window-rules = [
     {
+      default-column-width.proportion = 0.5;
       geometry-corner-radius = {
         top-left = 15.0;
         top-right = 15.0;
@@ -222,8 +267,26 @@ with lib;
     {
       matches = [ { app-id = "dev.noctalia.Noctalia.Settings"; } ];
       open-floating = true;
-      default-column-width = { fixed = 1080; };
-      default-window-height = { fixed = 920; };
+      default-column-width = {
+        fixed = 1080;
+      };
+      default-window-height = {
+        fixed = 920;
+      };
+    }
+    {
+      matches = [
+        {
+          app-id = "steam";
+          title = "^notificationtoasts_\\d+_desktop$";
+        }
+      ];
+      default-floating-position = {
+        x = 0;
+        y = 0;
+        relative-to = "bottom-right";
+      };
+      open-focused = false;
     }
   ];
 
