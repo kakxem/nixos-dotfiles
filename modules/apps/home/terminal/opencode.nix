@@ -2,11 +2,7 @@
 
 {
   home.packages = [
-    (inputs.opencode.packages.${pkgs.system}.default.overrideAttrs (old: {
-      preBuild = (old.preBuild or "") + ''
-        sed -i -E 's#"packageManager": "bun@[^"]+"#"packageManager": "bun@${pkgs.bun.version}"#' package.json
-      '';
-    }))
+    inputs.llm-agents.packages.${pkgs.system}.opencode
   ];
 
   xdg.configFile."opencode/AGENTS.md".text = ''

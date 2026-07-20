@@ -16,6 +16,10 @@
 
       # Vicinae
       "https://vicinae.cachix.org"
+
+      # Numtide
+      "https://cache.numtide.com"
+
     ];
 
     # will be appended to the system-level trusted-public-keys
@@ -31,6 +35,10 @@
 
       # Vicinae
       "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+
+      # Numtide
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+
     ];
   };
 
@@ -38,15 +46,11 @@
     # Change to stable if you want
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+    llm-agents.url = "github:numtide/llm-agents.nix";
 
     # User Package Management
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    opencode = {
-      url = "github:anomalyco/opencode/dev";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -117,6 +121,7 @@
                   "https://cache.nixos.org"
                   "https://noctalia.cachix.org"
                   "https://vicinae.cachix.org"
+                  "https://cache.numtide.com"
                 ];
 
                 trusted-public-keys = [
@@ -124,6 +129,7 @@
                   "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
                   "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
                   "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+                  "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
                 ];
               };
             }
