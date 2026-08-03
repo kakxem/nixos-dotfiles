@@ -7,22 +7,12 @@
 {
   imports = [
     ./autostart.nix
+    ./mime-apps.nix
     ./terminal
     ./editors
     ./media
     ./gaming
   ];
-
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
-      "application/pdf" = [ "org.gnome.Papers.desktop" ];
-      "x-directory/normal" = [ "org.gnome.Nautilus.desktop" ];
-      "x-scheme-handler/http" = [ "brave-browser.desktop" ];
-      "x-scheme-handler/https" = [ "brave-browser.desktop" ];
-    };
-  };
 
   home.packages = with pkgs; [
     # Personal
