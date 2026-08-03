@@ -372,6 +372,10 @@ in
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
       };
+      "org/gnome/nautilus/preferences" = {
+        click-policy = "single";
+        show-delete-permanently = true;
+      };
     };
   };
 
