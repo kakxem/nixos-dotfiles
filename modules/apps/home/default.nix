@@ -20,15 +20,12 @@
     brave
     proton-pass
     proton-vpn
-    hexchat
     telegram-desktop
     papers
     xlsclients
     (discord.override {
       withVencord = true;
     })
-    anki
-
     # Work
     distrobox
     distroshelf
