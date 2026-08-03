@@ -68,8 +68,7 @@ in
 
     environment.systemPackages = with pkgs; [
       grim
-      slurp
-      swappy
+      satty
       xdg-desktop-portal
       xdg-desktop-portal-gtk
       xdg-desktop-portal-wlr
