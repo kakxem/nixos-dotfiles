@@ -64,6 +64,11 @@ in
       QT_QPA_PLATFORM = "wayland";
       GDK_BACKEND = "wayland";
       MOZ_ENABLE_WAYLAND = "1";
+      GST_PLUGIN_SYSTEM_PATH_1_0 = lib.makeSearchPath "lib/gstreamer-1.0" [
+        pkgs.gst_all_1.gstreamer
+        pkgs.gst_all_1.gst-plugins-base
+        pkgs.gst_all_1.gst-plugins-good
+      ];
     };
 
     environment.systemPackages = with pkgs; [
@@ -90,7 +95,10 @@ in
 
     xdg.portal = {
       enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-wlr ];
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-wlr
+      ];
     };
   };
 }
