@@ -125,9 +125,9 @@ with lib;
       "sh"
       "-c"
       ''
-        mkdir -p "$HOME/Pictures"
-        filename="$HOME/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png"
-        grim -g "$(slurp)" - | swappy -f - -o "$filename" && notify-send "Saved to $filename"
+        mkdir -p "$HOME/Pictures/Screenshots"
+        filename="$HOME/Pictures/Screenshots/$(date '+Screenshot From %Y-%m-%d %H-%M-%S.png')"
+        grim -t ppm - | satty --filename - --fullscreen all --initial-tool crop --output-filename "$filename" --copy-command wl-copy --save-after-copy --early-exit all
       ''
     ];
 
@@ -135,9 +135,9 @@ with lib;
       "sh"
       "-c"
       ''
-        mkdir -p "$HOME/Pictures"
-        filename="$HOME/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png"
-        grim "$filename" && notify-send "Saved to $filename"
+        mkdir -p "$HOME/Pictures/Screenshots"
+        filename="$HOME/Pictures/Screenshots/$(date '+Screenshot From %Y-%m-%d %H-%M-%S.png')"
+        grim "$filename" && wl-copy --type image/png < "$filename" && notify-send "Saved and copied to clipboard: $filename"
       ''
     ];
 
