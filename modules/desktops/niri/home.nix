@@ -127,6 +127,16 @@ with lib;
       ''
         mkdir -p "$HOME/Pictures/Screenshots"
         filename="$HOME/Pictures/Screenshots/$(date '+Screenshot From %Y-%m-%d %H-%M-%S.png')"
+        grim "$filename" && wl-copy --type image/png < "$filename" && notify-send "Saved and copied to clipboard: $filename"
+      ''
+    ];
+
+    "Shift+Print".action.spawn = [
+      "sh"
+      "-c"
+      ''
+        mkdir -p "$HOME/Pictures/Screenshots"
+        filename="$HOME/Pictures/Screenshots/$(date '+Screenshot From %Y-%m-%d %H-%M-%S.png')"
         grim -t ppm - | satty --filename - --fullscreen all --initial-tool crop --output-filename "$filename" --copy-command wl-copy --save-after-copy --early-exit all
       ''
     ];
