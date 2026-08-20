@@ -18,5 +18,6 @@
       "render"
     ];
     shell = pkgs.fish;
+    linger = true;
   };
 }

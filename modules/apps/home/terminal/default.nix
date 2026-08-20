@@ -5,6 +5,7 @@
     ./fish.nix
     ./git.nix
     ./btop.nix
+    ./hermes.nix
     ./opencode.nix
   ];
 }
