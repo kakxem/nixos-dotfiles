@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  config,
   ...
 }:
 
@@ -8,25 +9,49 @@ let
   camofoxUrl = "http://127.0.0.1:9377";
   docker = "${pkgs.docker}/bin/docker";
   camofoxImage = "camofox-browser:135.0.1-x86_64";
+  hermes = inputs.llm-agents.packages.${pkgs.system}.hermes-agent;
 in
 {
-  imports = [
-    inputs.hermes-agent.homeManagerModules.default
-  ];
+  # No module: Hermes manages its own config interactively in ~/.hermes/.
+  home.packages = [ hermes ];
 
-  services.hermes-agent = {
-    enable = true;
-    gateway.enable = true;
-    backend.mode = "none";
+  home.sessionVariables = {
+    CAMOFOX_URL = camofoxUrl;
+    HERMES_HOME = "${config.home.homeDirectory}/.hermes";
   };
 
-  home.sessionVariables.CAMOFOX_URL = camofoxUrl;
+  systemd.user.services.hermes-agent = {
+    Unit = {
+      Description = "Hermes Agent Gateway";
+      After = [ "default.target" ];
+      ConditionPathExists = "%h/.hermes/config.yaml";
+    };
+
+    Service = {
+      Type = "simple";
+      Environment = "HERMES_HOME=%h/.hermes";
+      ExecStart = "${hermes}/bin/hermes gateway run";
+      WorkingDirectory = "%h/.hermes";
+      Restart = "always";
+      RestartSec = 5;
+      RestartForceExitStatus = [ 75 ];
+      TimeoutStopSec = 210;
+      KillMode = "mixed";
+      KillSignal = "SIGTERM";
+      StandardOutput = "journal";
+      StandardError = "journal";
+    };
+
+    Install.WantedBy = [ "default.target" ];
+  };
 
   systemd.user.services.camofox-browser = {
     Unit = {
       Description = "Camofox anti-detection browser server";
       After = [ "default.target" ];
       Wants = [ "default.target" ];
+      # Only start when the Docker daemon is available.
+      ConditionPathExists = [ "/run/docker.sock" ];
     };
 
     Service = {
