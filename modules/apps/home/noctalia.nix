@@ -17,23 +17,43 @@
         panel = {
           attach_control_center = true;
           attach_wallpaper = false;
+          # Power → session panel → placement near trigger.
+          open_near_click_session = true;
         };
 
-        animation.speed = 0.4;
+        animation.speed = 1;
+
+        session = {
+          # Power → session panel → show shortcuts.
+          show_shortcuts = false;
+        };
       };
 
-      notification.enable_daemon = true;
+      notification = {
+        enable_daemon = true;
+        position = "top_center";
+      };
+
+      control_center = {
+        width = 800;
+        sidebar = "full";
+        sidebar_section = "full";
+        hidden_tabs = [
+          "monitor"
+          "network"
+          "bluetooth"
+          "weather"
+        ];
+      };
 
       bar.default = {
         start = [
-          "launcher"
           "active_window"
         ];
         center = [
           "notifications"
           "clock"
           "media"
-          "audio_visualizer"
           "volume"
         ];
         end = [
@@ -47,10 +67,15 @@
         radius = 0;
         shadow = false;
         widget_spacing = 15;
+        hover_highlight = false;
+      };
+
+      widget.tray = {
+        hide_passive = false;
       };
 
       dock = {
-        enabled = true;
+        enabled = false;
         auto_hide = true;
         launcher_position = "start";
         show_dots = true;
@@ -58,9 +83,16 @@
       };
 
       theme = {
-        builtin = "Dracula";
-        community_palette = "Catppuccin Lavender";
-        templates.community_ids = [ "telegram" ];
+        builtin = "Ayu";
+        pure_black_dark = true;
+      };
+
+      audio = {
+        enable_overdrive = true;
+      };
+
+      weather = {
+        enabled = false;
       };
     };
   };
