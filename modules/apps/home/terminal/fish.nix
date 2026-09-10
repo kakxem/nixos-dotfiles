@@ -212,12 +212,37 @@ in
       interactiveShellInit = ''
         set fish_greeting # Disable greeting
         starship init fish | source
+        zoxide init fish | source
+        fastfetch # Show system info on opening an interactive shell
       '';
+
+      # Modern CLI replacements.
+      shellAliases = {
+        ls = "eza";
+        ll = "eza -la";
+        cat = "bat";
+        find = "fd";
+      };
+
+      functions = {
+        # Optional fzf directory picker; excludes internal Git directories.
+        cf = ''
+          if test (count $argv) -eq 1
+            set dir (fd --type d --hidden --exclude .git 2>/dev/null | fzf --query "$argv[1]" --preview 'eza -T --level=1 {}' --preview-window right:45%)
+          else
+            set dir (fd --type d --hidden --exclude .git 2>/dev/null | fzf --preview 'eza -T --level=1 {}' --preview-window right:45%)
+          end
+          if test -n "$dir"
+            cd "$dir"
+          end
+        '';
+      };
     };
   };
 
   home.packages = with pkgs; [
     starship
+    fastfetch
   ];
 
   xdg.configFile."starship.toml".text = starshipConf;
