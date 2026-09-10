@@ -12,6 +12,7 @@
     ./gaming.nix
     ./libvirt.nix
     ./sunshine.nix
+    ./tailscale.nix
     ./waydroid.nix
   ];
 
