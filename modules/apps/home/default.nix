@@ -33,6 +33,5 @@
     bun
     nodejs_24
     mission-center
-    vscode-fhs
   ];
 }
