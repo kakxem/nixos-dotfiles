@@ -76,6 +76,10 @@ in
     steam = {
       enable = true;
 
+      extraPackages = [
+        pkgs.gamemode
+      ];
+
       extraCompatPackages = with pkgs; [
         proton-ge-bin
       ];
