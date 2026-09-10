@@ -2,7 +2,11 @@
 #  General Home-manager configuration
 #
 
-{ pkgs, user, desktop, ... }:
+{
+  user,
+  desktop,
+  ...
+}:
 
 let
   desktopHomeModules = {
@@ -15,7 +19,9 @@ in
 {
   imports = [
     ../modules/apps/home
-  ] ++ (desktopHomeModules.${desktop} or []);
+    ../modules/config/theming/home.nix
+  ]
+  ++ (desktopHomeModules.${desktop} or [ ]);
 
   home = {
     username = "${user}";

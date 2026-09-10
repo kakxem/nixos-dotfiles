@@ -88,6 +88,7 @@
     }:
     let
       vars = import ./vars.nix;
+      palettes = import ./theme/palettes.nix;
 
       # Use system from vars
       system = vars.system;
@@ -107,7 +108,7 @@
         nixpkgs.lib.nixosSystem {
           inherit pkgs;
           specialArgs = {
-            inherit inputs pkgs-stable;
+            inherit inputs pkgs-stable palettes;
           }
           // vars;
 
@@ -147,7 +148,12 @@
           inherit pkgs;
 
           extraSpecialArgs = {
-            inherit pkgs inputs pkgs-stable;
+            inherit
+              pkgs
+              inputs
+              pkgs-stable
+              palettes
+              ;
           }
           // vars;
           modules = [

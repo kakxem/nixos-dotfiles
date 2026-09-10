@@ -7,6 +7,7 @@
 {
   imports = [
     ./autostart.nix
+    ./brave.nix
     ./mime-apps.nix
     ./terminal
     ./editors
@@ -17,7 +18,6 @@
   home.packages = with pkgs; [
     # Personal
     baobab
-    brave
     proton-pass
     proton-vpn
     telegram-desktop

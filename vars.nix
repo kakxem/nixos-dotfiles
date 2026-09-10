@@ -9,4 +9,7 @@
   system = "x86_64-linux";
   desktop = "niri"; # Possible options: "gnome", "hyprland", "kde", "niri"
   gpu = "amd"; # Possible options: "amd", "nvidia", "nvidia-open", "intel", "none"
+
+  # Color palette (see theme/palettes.nix)
+  palette = "ayu"; # ayu, gruvbox, onedark, dracula, nord, osaka-jade, catppuccin-mocha, tokyo-night-storm, everforest
 }

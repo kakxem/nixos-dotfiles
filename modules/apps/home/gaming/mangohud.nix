@@ -1,5 +1,15 @@
-{ config, ... }:
+{
+  config,
+  palette,
+  palettes,
+  ...
+}:
 
+let
+  p = palettes.${palette};
+  # MangoHud colors are raw hex (no '#') — strip the leading '#'.
+  mh = c: builtins.substring 1 6 c;
+in
 {
   xdg.configFile."MangoHud/MangoHud.conf".text = ''
     legacy_layout=false
@@ -35,7 +45,7 @@
     throttling_status_graph
     gpu_name
     vulkan_driver
-    gpu_color=2E9762
+    gpu_color=${mh p.green}
     cpu_text=CPU
     cpu_stats
     core_load
@@ -47,13 +57,13 @@
     cpu_power
     cpu_efficiency
     core_type
-    cpu_color=2E97CB
+    cpu_color=${mh p.blue}
     io_read
     io_write
-    io_color=A491D3
+    io_color=${mh p.cyan}
     swap
     ram
-    ram_color=C26693
+    ram_color=${mh p.magenta}
     procmem
     proc_vram
     battery

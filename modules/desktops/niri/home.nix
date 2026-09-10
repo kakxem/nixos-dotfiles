@@ -3,10 +3,16 @@
   lib,
   pkgs,
   inputs,
+  palette,
+  palettes,
   ...
 }:
 
 with lib;
+let
+  # Active color palette (semantic keys resolved from theme/palettes.nix)
+  p = palettes.${palette};
+in
 {
   imports = [
     inputs.niri.homeModules.niri
@@ -84,28 +90,10 @@ with lib;
   dconf = {
     enable = true;
     settings = {
-      "org/gnome/desktop/interface".color-scheme = "prefer-dark";
       "org/gnome/nautilus/preferences" = {
         click-policy = "single";
         show-delete-permanently = true;
       };
-    };
-  };
-
-  gtk = {
-    enable = true;
-    gtk4.theme = null;
-    theme = {
-      package = pkgs.adw-gtk3;
-      name = "adw-gtk3-dark";
-    };
-    iconTheme = {
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
-    };
-    font = {
-      name = "Sans";
-      size = 11;
     };
   };
 
@@ -253,20 +241,20 @@ with lib;
   };
 
   programs.niri.settings.layout = {
-    background-color = "#000000";
+    background-color = p.bg;
     gaps = 4;
     border = {
       enable = true;
       width = 2;
-      active.color = "#ffb1c8";
-      inactive.color = "#9e8c90";
-      urgent.color = "#ffb4ab";
+      active.color = p.accent;
+      inactive.color = p.comment;
+      urgent.color = p.red;
     };
     focus-ring = {
       width = 2;
-      active.color = "#ffb1c8";
-      inactive.color = "#9e8c90";
-      urgent.color = "#ffb4ab";
+      active.color = p.accent;
+      inactive.color = p.comment;
+      urgent.color = p.red;
     };
   };
 

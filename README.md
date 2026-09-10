@@ -6,13 +6,14 @@ This repository contains a modular NixOS configuration managed as a **Flake**. I
 ## How it Works
 The configuration is designed to be highly modular and easy to customize:
 
-1.  **Centralized Variables (`vars.nix`)**: All user-specific info (name, email) and system toggles (architecture, desktop environment, GPU vendor) are defined here.
+1.  **Centralized Variables (`vars.nix`)**: All user-specific info (name, email) and system choices (architecture, desktop environment, GPU vendor, color palette) are defined here.
 2.  **SpecialArgs**: These variables are passed from `flake.nix` to every module, allowing them to adapt dynamically (e.g., using `${user}` and `${desktop}` everywhere).
 3.  **Modular Structure**:
     - **`core/`**: The entry points. `system.nix` defines the OS structure, and `home.nix` defines the user environment.
     - **`modules/config/`**: Low-level system configurations (Boot, Hardware, Services).
     - **`modules/apps/`**: Package lists divided into `system` (NixOS) and `home` (Home Manager).
     - **`modules/desktops/`**: Specific configurations for different desktop environments.
+    - **`theme/`**: Shared color palettes and generators for palette-driven themes and icons.
 
 ---
 
@@ -31,8 +32,12 @@ The configuration is designed to be highly modular and easy to customize:
 │   ├── config/
 │   │   ├── system/       # Core OS (Boot, Users, Locale, etc.)
 │   │   ├── hardware/     # Drivers & Generated hardware configs
-│   │   └── services/     # System services, Fonts & Rebuild scripts
+│   │   ├── services/     # System services, Fonts & Rebuild scripts
+│   │   └── theming/      # System and Home Manager theme integration
 │   └── desktops/         # Desktop-specific modules (GNOME, Hyprland, KDE, Niri)
+├── theme/
+│   ├── palettes.nix      # Shared semantic color palettes
+│   └── generators/       # Themes and icons generated from the active palette
 ├── scripts/
 │   └── install.sh        # Initial installation script
 └── wallpapers/           # System wallpapers
@@ -56,7 +61,7 @@ exit
 # Go to dotfiles
 cd ~/.config/nixos-dotfiles
 
-# Review vars.nix and adjust the user, Git identity, system, and desktop before installing
+# Review vars.nix and adjust the user, Git identity, system, desktop, GPU, and palette
 $EDITOR vars.nix
 
 # Give execution permission and run the install script
@@ -102,6 +107,17 @@ Set `gpu` to one of: `"amd"`, `"nvidia"`, `"nvidia-open"`, `"intel"`, or `"none"
 - `"nvidia-open"`: enables the open NVIDIA kernel module with modesetting for supported newer GPUs.
 - `"intel"`: enables the modesetting driver and Intel media acceleration packages.
 - `"none"`: skips vendor-specific GPU configuration.
+
+### Changing the Color Palette
+The shared color palette is selected through the `palette` variable in `vars.nix`.
+
+Available palettes are: `"ayu"`, `"gruvbox"`, `"onedark"`, `"dracula"`, `"nord"`, `"osaka-jade"`, `"catppuccin-mocha"`, `"tokyo-night-storm"`, and `"everforest"`.
+
+The selected palette is applied to supported desktop, terminal, editor, shell, and application themes. After changing it, rebuild the Home Manager configuration:
+
+```bash
+rebuild-home
+```
 
 ### Manual Rebuild
 You can also use the standard Nix commands:
