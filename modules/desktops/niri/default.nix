@@ -73,6 +73,7 @@ in
 
     environment.systemPackages = with pkgs; [
       grim
+      slurp
       satty
       xdg-desktop-portal
       xdg-desktop-portal-gtk

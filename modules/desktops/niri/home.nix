@@ -58,6 +58,13 @@ in
     kdePackages.qt6ct
     adw-gtk3
     playerctl
+    # OCR language data for the XF86Tools region-capture shortcut.
+    (tesseract5.override {
+      enableLanguages = [
+        "eng"
+        "spa"
+      ];
+    })
   ];
 
   # Cursor: prefer declarative control via niri-flake/Home Manager.
@@ -129,21 +136,20 @@ in
       ''
     ];
 
-    "Ctrl+Print".action.spawn = [
-      "sh"
-      "-c"
-      ''
-        mkdir -p "$HOME/Pictures/Screenshots"
-        filename="$HOME/Pictures/Screenshots/$(date '+Screenshot From %Y-%m-%d %H-%M-%S.png')"
-        grim "$filename" && wl-copy --type image/png < "$filename" && notify-send "Saved and copied to clipboard: $filename"
-      ''
-    ];
-
     "Mod+F".action.maximize-column = [ ];
     "Mod+R".action.set-column-width = "50%";
     "Mod+Shift+F".action.fullscreen-window = [ ];
     "Mod+V".action.toggle-window-floating = [ ];
     "Mod+Shift+V".action.switch-focus-between-floating-and-tiling = [ ];
+
+    # OCR: select a screen region and copy the extracted text to the clipboard.
+    "XF86Tools".action.spawn = [
+      "sh"
+      "-c"
+      ''
+        grim -g "$(slurp -d)" - | tesseract stdin stdout | wl-copy && notify-send "OCR: texto copiado al portapapeles"
+      ''
+    ];
 
     "Mod+S".action.spawn = [
       "noctalia"
