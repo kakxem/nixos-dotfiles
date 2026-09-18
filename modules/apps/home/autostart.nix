@@ -2,11 +2,11 @@
 
 {
   xdg.configFile = {
-    "autostart/brave-browser.desktop".text = ''
+    "autostart/brave-origin.desktop".text = ''
       [Desktop Entry]
       Type=Application
-      Name=Brave Web Browser
-      Exec=brave %U
+      Name=Brave Origin
+      Exec=brave-origin %U
       Terminal=false
       Categories=Network;WebBrowser;
     '';

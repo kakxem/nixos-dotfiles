@@ -273,7 +273,7 @@ in
           (lua ''
             function()
               hl.exec_cmd("vicinae server")
-              hl.exec_cmd("brave")
+              hl.exec_cmd("brave-origin")
               hl.exec_cmd("telegram-desktop")
               hl.exec_cmd("vesktop")
               hl.exec_cmd("configure-gtk")

@@ -46,7 +46,7 @@
   dconf.settings = {
     "org/gnome/shell" = {
       favorite-apps = [
-        "brave-browser.desktop"
+        "brave-origin.desktop"
         "vesktop.desktop"
         "org.telegram.desktop.desktop"
         "steam.desktop"

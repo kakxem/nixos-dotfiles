@@ -10,7 +10,7 @@
     defaultApplications = {
       "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
       "application/pdf" = [ "org.gnome.Papers.desktop" ];
-      "application/xhtml+xml" = [ "brave-browser.desktop" ];
+      "application/xhtml+xml" = [ "brave-origin.desktop" ];
       "audio/flac" = [ "mpv.desktop" ];
       "audio/mpeg" = [ "mpv.desktop" ];
       "audio/ogg" = [ "mpv.desktop" ];
@@ -24,7 +24,7 @@
       "image/svg+xml" = [ "org.gnome.Loupe.desktop" ];
       "image/tiff" = [ "org.gnome.Loupe.desktop" ];
       "image/webp" = [ "org.gnome.Loupe.desktop" ];
-      "text/html" = [ "brave-browser.desktop" ];
+      "text/html" = [ "brave-origin.desktop" ];
       "video/mp4" = [ "mpv.desktop" ];
       "video/mpeg" = [ "mpv.desktop" ];
       "video/quicktime" = [ "mpv.desktop" ];
@@ -32,9 +32,9 @@
       "video/x-matroska" = [ "mpv.desktop" ];
       "video/x-msvideo" = [ "mpv.desktop" ];
       "x-directory/normal" = [ "org.gnome.Nautilus.desktop" ];
-      "x-scheme-handler/ftp" = [ "brave-browser.desktop" ];
-      "x-scheme-handler/http" = [ "brave-browser.desktop" ];
-      "x-scheme-handler/https" = [ "brave-browser.desktop" ];
+      "x-scheme-handler/ftp" = [ "brave-origin.desktop" ];
+      "x-scheme-handler/http" = [ "brave-origin.desktop" ];
+      "x-scheme-handler/https" = [ "brave-origin.desktop" ];
     };
   };
 }

@@ -1,18 +1,18 @@
-# Keep Brave's toolkit and profile theme on Qt.
+# Keep Brave Origin's toolkit and profile theme on Qt.
 { config, pkgs, ... }:
 
 let
-  braveQt = pkgs.brave.override {
+  braveOriginQt = pkgs.brave-origin.override {
     commandLineArgs = "--ui-toolkit=qt";
   };
 
-  braveLauncher = pkgs.writeShellScript "brave-qt-launcher" ''
-    brave_preferences=${pkgs.lib.escapeShellArg "${config.home.homeDirectory}/.config/BraveSoftware/Brave-Browser/Default/Preferences"}
+  braveOriginLauncher = pkgs.writeShellScript "brave-origin-qt-launcher" ''
+    brave_preferences=${pkgs.lib.escapeShellArg "${config.home.homeDirectory}/.config/BraveSoftware/Brave-Origin/Default/Preferences"}
     brave_profile_dir="$(${pkgs.coreutils}/bin/dirname "$brave_preferences")"
     brave_uid="$(${pkgs.coreutils}/bin/id -u)"
 
-    # Update the profile only while Brave is not running.
-    if ! ${pkgs.procps}/bin/pgrep -u "$brave_uid" -x brave >/dev/null 2>&1; then
+    # Update the profile only while Brave Origin is not running.
+    if ! ${pkgs.procps}/bin/pgrep -u "$brave_uid" -x brave-origin >/dev/null 2>&1; then
       ${pkgs.coreutils}/bin/mkdir -p "$brave_profile_dir"
 
       if [ -f "$brave_preferences" ]; then
@@ -31,29 +31,29 @@ let
       fi
     fi
 
-    exec ${braveQt}/bin/brave "$@"
+    exec ${braveOriginQt}/bin/brave-origin "$@"
   '';
 
-  braveWithQtTheme = pkgs.symlinkJoin {
-    name = "brave-with-qt-theme";
-    paths = [ braveQt ];
+  braveOriginWithQtTheme = pkgs.symlinkJoin {
+    name = "brave-origin-with-qt-theme";
+    paths = [ braveOriginQt ];
     nativeBuildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
-      rm "$out/bin/brave"
-      makeWrapper ${braveLauncher} "$out/bin/brave"
+      rm "$out/bin/brave-origin"
+      makeWrapper ${braveOriginLauncher} "$out/bin/brave-origin"
 
       # Route desktop entries through the profile-aware launcher.
       for brave_desktop in "$out"/share/applications/*.desktop; do
         brave_desktop_source="$(${pkgs.coreutils}/bin/readlink -f "$brave_desktop")"
         rm "$brave_desktop"
         ${pkgs.gnused}/bin/sed \
-          "s|${braveQt}/bin/brave|$out/bin/brave|g" \
+          "s|${braveOriginQt}/bin/brave-origin|$out/bin/brave-origin|g" \
           "$brave_desktop_source" > "$brave_desktop"
       done
     '';
-    meta = braveQt.meta;
+    meta = braveOriginQt.meta;
   };
 in
 {
-  home.packages = [ braveWithQtTheme ];
+  home.packages = [ braveOriginWithQtTheme ];
 }
