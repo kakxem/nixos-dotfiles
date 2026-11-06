@@ -94,8 +94,8 @@ in
         settings_show_advanced = true;
         launch_apps_as_systemd_services = true;
         panel = {
-          attach_control_center = true;
-          attach_wallpaper = false;
+          # auto = bar-relative, so the panel stays centered under the bar.
+          control_center_position = "auto";
           # Power → session panel → placement near trigger.
           open_near_click_session = true;
         };
@@ -159,6 +159,11 @@ in
         launcher_position = "start";
         show_dots = true;
         reserve_space = false;
+      };
+
+      wallpaper = {
+        # Keep Niri's background-color instead of Noctalia's bundled wallpaper.
+        enabled = false;
       };
 
       theme = {
