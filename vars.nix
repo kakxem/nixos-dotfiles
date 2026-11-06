@@ -11,5 +11,5 @@
   gpu = "amd"; # Possible options: "amd", "nvidia", "nvidia-open", "intel", "none"
 
   # Color palette (see theme/palettes.nix)
-  palette = "ayu"; # ayu, gruvbox, onedark, dracula, nord, osaka-jade, catppuccin-mocha, tokyo-night-storm, everforest
+  palette = "osaka-jade"; # ayu, gruvbox, onedark, dracula, nord, osaka-jade, catppuccin-mocha, tokyo-night-storm, everforest
 }
