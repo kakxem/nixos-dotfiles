@@ -78,23 +78,30 @@ The installer shows the current `vars.nix` values, asks for confirmation, instal
 
 ## Management & Rebuilding
 
-The system provides two convenience commands to apply changes:
+Rebuilds run through [`nix-rebuild`](https://github.com/kakxem/nix-rebuild), a terminal UI that runs the NixOS and Home Manager switches, streams Nix's output and records every run so it can be read back later. This repository consumes it as a flake input and declares its options in `modules/apps/home/terminal/nix-rebuild.nix` (the checkout and the names of both configurations), so the commands need no arguments:
 
-- **`rebuild-system`**: Rebuilds the NixOS system configuration (requires sudo).
-- **`rebuild-home`**: Rebuilds the Home Manager configuration (standalone, no sudo required).
+```sh
+nix-rebuild home      # build and switch the Home Manager configuration
+nix-rebuild system    # build and switch the NixOS system
+nix-rebuild update    # refresh flake.lock, build both, then activate both
+nix-rebuild runs      # list recorded runs, read a log or delete one
+nix-rebuild locks     # put a saved flake.lock back and rebuild with it
+```
 
-*Note: This repository uses a **Flake-based standalone** setup for Home Manager. The `home-manager` CLI is installed system-wide during `rebuild-system`, so `rebuild-home` works immediately after the system is installed. `rebuild-home` runs `home-manager switch -b backup`, so replaced Home Manager files are backed up with the `backup` extension.*
+`nix-rebuild home` runs as your regular user. `nix-rebuild system` re-executes itself under `sudo`, so its whole interface runs as root.
+
+*Note: The older `rebuild-system` and `rebuild-home` scripts are still installed from `modules/config/services/scripts.nix`. They are legacy scripts, but they still work if `nix-rebuild` breaks or something else fails.*
 
 ### Switching Desktops
 The desktop environment is managed through the `desktop` variable in `vars.nix`. 
 
 To switch environments:
 1.  Edit `vars.nix` and set `desktop` to one of: `"gnome"`, `"hyprland"`, `"kde"`, or `"niri"`.
-2.  Run the rebuild scripts to apply changes:
+2.  Apply the change with the rebuild commands:
 
 ```bash
-rebuild-system
-rebuild-home
+nix-rebuild system
+nix-rebuild home
 ```
 
 ### Hardware Selection
@@ -116,7 +123,7 @@ Available palettes are: `"ayu"`, `"gruvbox"`, `"onedark"`, `"dracula"`, `"nord"`
 The selected palette is applied to supported desktop, terminal, editor, shell, and application themes. After changing it, rebuild the Home Manager configuration:
 
 ```bash
-rebuild-home
+nix-rebuild home
 ```
 
 ### Manual Rebuild
