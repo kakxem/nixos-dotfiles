@@ -9,27 +9,9 @@ let
   camofoxUrl = "http://127.0.0.1:9377";
   docker = "${pkgs.docker}/bin/docker";
   camofoxImage = "camofox-browser:135.0.1-x86_64";
-  # llm-agents omits locales/ and HERMES_BUNDLED_LOCALES, leaving untranslated
-  # message keys. Bundle the catalog and point Hermes to it.
-  hermes =
-    (inputs.llm-agents.packages.${pkgs.system}.hermes-agent).overrideAttrs (
-      old: {
-        postInstall =
-          (old.postInstall or "")
-          + ''
-            mkdir -p "$out/share/hermes/locales"
-            cp -r ${old.src}/locales/. "$out/share/hermes/locales/"
-          '';
-        makeWrapperArgs =
-          (old.makeWrapperArgs or [ ])
-          ++ [
-            "--set"
-            "HERMES_BUNDLED_LOCALES"
-            "${pkgs.lib.placeholder "out"}/share/hermes/locales"
-          ];
-      }
-    );
-  hermesDesktop = inputs.llm-agents.packages.${pkgs.system}.hermes-desktop;
+  hermes = inputs.hermes-agent.packages.${pkgs.system}.default;
+  hermesDesktopUnwrapped = inputs.hermes-agent.packages.${pkgs.system}.desktop;
+  hermesDesktop = hermesDesktopUnwrapped;
 in
 {
   # No module: Hermes manages its own config interactively in ~/.hermes/.

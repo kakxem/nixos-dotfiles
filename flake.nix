@@ -48,6 +48,12 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     llm-agents.url = "github:numtide/llm-agents.nix";
 
+    # Hermes agent
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # User Package Management
     home-manager = {
       url = "github:nix-community/home-manager";
