@@ -1,8 +1,17 @@
 { pkgs, inputs, ... }:
 
+let
+  opencode2 = inputs.llm-agents.packages.${pkgs.system}.opencode2;
+
+  opencode = pkgs.writeShellScriptBin "opencode" ''
+    exec ${opencode2}/bin/opencode2 "$@"
+  '';
+in
+
 {
   home.packages = [
-    inputs.llm-agents.packages.${pkgs.system}.opencode
+    opencode2
+    opencode
   ];
 
   xdg.configFile."opencode/AGENTS.md".text = ''
