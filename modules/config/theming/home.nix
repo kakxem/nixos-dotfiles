@@ -287,6 +287,13 @@ in
       name = "Sans";
       size = 11;
     };
+    # GTK draws the headerbar buttons of client-side decorated windows (Ghostty,
+    # Nautilus, ...) from gtk-decoration-layout. KDE's GTK config
+    # (kde-gtk-config) rewrites it to "icon:minimize,maximize,close", which adds
+    # the window icon plus minimize and maximize. Pin the close-only layout in
+    # the ini files GTK falls back to when no XSETTINGS manager answers.
+    gtk3.extraConfig."gtk-decoration-layout" = ":close";
+    gtk4.extraConfig."gtk-decoration-layout" = ":close";
   };
 
   # Palette-driven accent + surfaces override.
@@ -295,6 +302,13 @@ in
 
   # Dark color scheme at the gsettings level (independent of DE).
   dconf.settings."org/gnome/desktop/interface"."color-scheme" = "prefer-dark";
+
+  # Same decoration layout for the settings portal: on Wayland GTK asks the
+  # portal, and on niri the answer comes from xdg-desktop-portal-gnome, which
+  # reads this dconf key. Only the GNOME module pinned it before, so a KDE
+  # session's GTK config (kde-gtk-config writes org.gnome.desktop.wm.preferences)
+  # left it at "icon:minimize,maximize,close" on the other desktops.
+  dconf.settings."org/gnome/desktop/wm/preferences"."button-layout" = ":close";
 
   # KDE color scheme and matching folder icons.
   #
