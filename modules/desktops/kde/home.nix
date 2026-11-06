@@ -4,6 +4,7 @@
 
 {
   pkgs,
+  lib,
   ...
 }:
 
@@ -19,11 +20,15 @@
 
     workspace = {
       lookAndFeel = "org.kde.breezedark.desktop";
+      # Palette identity from the theming module: it writes the scheme to
+      # xdg.dataFile."color-schemes/custom-theme.colors" and leaves kdeglobals
+      # to plasma-manager, so apply it by name here.
+      colorScheme = "custom-theme";
+      iconTheme = "custom-theme-kde";
       cursor = {
         theme = "Breeze_Snow";
         size = 24;
       };
-      iconTheme = "Breeze";
     };
 
     configFile = {
@@ -43,11 +48,14 @@
 
   gtk = {
     enable = true;
-    iconTheme = {
+    # The shared theming module owns the GTK theme and icon identity
+    # (adw-gtk3-dark + palette icons) on every desktop. These Breeze values
+    # stay as lower-priority defaults so the KDE module does not fight it.
+    iconTheme = lib.mkDefault {
       package = pkgs.kdePackages.breeze-icons;
       name = "Breeze";
     };
-    theme = {
+    theme = lib.mkDefault {
       package = pkgs.kdePackages.breeze-gtk;
       name = "Breeze-Dark";
     };
