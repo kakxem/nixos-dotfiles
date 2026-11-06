@@ -83,6 +83,13 @@
 
     # Noctalia
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
+
+    # GameSir controller
+    gamesir-nix = {
+      url = "git+https://codeberg.org/Epaphroditus/gamesir-linux-tools-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.upstream-src.url = "github:broroeror/gamesir-linux-tools/main";
+    };
   };
 
   outputs =

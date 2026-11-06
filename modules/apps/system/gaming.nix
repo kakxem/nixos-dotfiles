@@ -7,10 +7,13 @@
   pkgs,
   gpu,
   user,
+  inputs,
   ...
 }:
 
 let
+  deadband = inputs.gamesir-nix.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
   nvtopPackage =
     {
       amd = pkgs.nvtopPackages.amd;
@@ -49,6 +52,7 @@ in
       r2modman
       mangohud
       gamescope
+      deadband
     ]
     ++ lib.optionals (nvtopPackage != null) [
       nvtopPackage
@@ -108,6 +112,6 @@ in
   };
   users.users."${user}".extraGroups = [ "gamemode" ];
 
-  hardware.xone.enable = true; # Xbox controller support
+  services.udev.packages = [ deadband ];
   services.lact.enable = gpu == "amd"; # Enable lact
 }
