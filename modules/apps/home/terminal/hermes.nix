@@ -11,7 +11,24 @@ let
   camofoxImage = "camofox-browser:135.0.1-x86_64";
   hermes = inputs.hermes-agent.packages.${pkgs.system}.default;
   hermesDesktopUnwrapped = inputs.hermes-agent.packages.${pkgs.system}.desktop;
-  hermesDesktop = hermesDesktopUnwrapped;
+  # MangoHud's implicit Vulkan layer (MANGOHUD=1, set in gaming.nix) SIGSEGVs
+  # Electron's GPU process at startup; Chromium then falls back to software
+  # rendering and the whole UI lags. DISABLE_MANGOHUD=1 disables the layer for
+  # this app only, so games keep the overlay. The .desktop entry must point at
+  # the wrapper or menu launches would skip it.
+  hermesDesktop = pkgs.symlinkJoin {
+    name = "hermes-desktop-mangohud-off";
+    paths = [ hermesDesktopUnwrapped ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/hermes-desktop --set DISABLE_MANGOHUD 1
+      rm $out/share/applications/com.nousresearch.hermes.desktop
+      substitute ${hermesDesktopUnwrapped}/share/applications/com.nousresearch.hermes.desktop \
+        $out/share/applications/com.nousresearch.hermes.desktop \
+        --replace-fail 'Exec=${hermesDesktopUnwrapped}/bin/hermes-desktop' \
+                       "Exec=$out/bin/hermes-desktop"
+    '';
+  };
 in
 {
   # No module: Hermes manages its own config interactively in ~/.hermes/.
