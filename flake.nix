@@ -90,6 +90,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.upstream-src.url = "github:broroeror/gamesir-linux-tools/main";
     };
+
+    # nix-rebuild
+    nix-rebuild = {
+      url = "github:kakxem/nix-rebuild";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

@@ -9,6 +9,7 @@
     ./btop.nix
     ./hermes.nix
     ./opencode.nix
+    ./nix-rebuild.nix
   ];
 
   home.packages = with pkgs; [
