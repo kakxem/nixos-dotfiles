@@ -3,7 +3,7 @@
 #
 # Applies the active palette to GTK/libadwaita and Qt/Kvantum for every desktop.
 #
-{ pkgs, lib, palette, palettes, ... }:
+{ pkgs, lib, config, palette, palettes, ... }:
 
 let
   p = palettes.${palette};
@@ -297,7 +297,15 @@ in
   dconf.settings."org/gnome/desktop/interface"."color-scheme" = "prefer-dark";
 
   # KDE color scheme and matching folder icons.
-  xdg.configFile."kdeglobals".text = kdeglobals;
+  #
+  # kdeglobals is only symlinked on desktops without plasma-manager: its
+  # configure-plasma step rewrites ~/.config/kdeglobals at activation and dies
+  # with EROFS when the path is a symlink into the store. On Plasma the same
+  # palette reaches kdeglobals through the color scheme installed below plus
+  # programs.plasma.workspace.colorScheme in the KDE module.
+  xdg.configFile."kdeglobals" = lib.mkIf (!config.programs.plasma.enable) {
+    text = kdeglobals;
+  };
   xdg.dataFile."color-schemes/custom-theme.colors".source =
     "${customTheme}/share/color-schemes/custom-theme.colors";
   xdg.dataFile."icons/custom-theme-kde".source =
