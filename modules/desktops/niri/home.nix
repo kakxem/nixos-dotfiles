@@ -17,6 +17,7 @@ in
   imports = [
     inputs.niri.homeModules.niri
     ../../apps/home/noctalia.nix
+    ../../apps/home/screenshots-wlr.nix
   ];
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
@@ -58,13 +59,6 @@ in
     kdePackages.qt6ct
     adw-gtk3
     playerctl
-    # OCR language data for the XF86Tools region-capture shortcut.
-    (tesseract5.override {
-      enableLanguages = [
-        "eng"
-        "spa"
-      ];
-    })
   ];
 
   # Cursor: prefer declarative control via niri-flake/Home Manager.
@@ -116,25 +110,9 @@ in
       ];
     };
 
-    "Print".action.spawn = [
-      "sh"
-      "-c"
-      ''
-        mkdir -p "$HOME/Pictures/Screenshots"
-        filename="$HOME/Pictures/Screenshots/$(date '+Screenshot From %Y-%m-%d %H-%M-%S.png')"
-        grim "$filename" && wl-copy --type image/png < "$filename" && notify-send "Saved and copied to clipboard: $filename"
-      ''
-    ];
+    "Print".action.spawn = [ "screenshot-full" ];
 
-    "Shift+Print".action.spawn = [
-      "sh"
-      "-c"
-      ''
-        mkdir -p "$HOME/Pictures/Screenshots"
-        filename="$HOME/Pictures/Screenshots/$(date '+Screenshot From %Y-%m-%d %H-%M-%S.png')"
-        grim -t ppm - | satty --filename - --fullscreen all --initial-tool crop --output-filename "$filename" --copy-command wl-copy --save-after-copy --early-exit all
-      ''
-    ];
+    "Shift+Print".action.spawn = [ "screenshot-region" ];
 
     "Mod+F".action.maximize-column = [ ];
     "Mod+R".action.set-column-width = "50%";
@@ -143,13 +121,7 @@ in
     "Mod+Shift+V".action.switch-focus-between-floating-and-tiling = [ ];
 
     # OCR: select a screen region and copy the extracted text to the clipboard.
-    "XF86Tools".action.spawn = [
-      "sh"
-      "-c"
-      ''
-        grim -g "$(slurp -d)" - | tesseract stdin stdout | wl-copy && notify-send "OCR: texto copiado al portapapeles"
-      ''
-    ];
+    "XF86Tools".action.spawn = [ "screenshot-ocr" ];
 
     "Mod+S".action.spawn = [
       "noctalia"
