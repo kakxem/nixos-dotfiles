@@ -617,11 +617,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793921805,
-        "narHash": "sha256-J32tZPQkXSuON/AuhMMLFjKVWy7qTkLgHM+tjKzW/0o=",
+        "lastModified": 1794065789,
+        "narHash": "sha256-EjxNsVpv1jHZkikB3lkFHyZQlQV7wZb1fqUVU9J1Rp8=",
         "owner": "kakxem",
         "repo": "nix-rebuild",
-        "rev": "b4642f20905f6b005552da2e115f4fa00f2e72f9",
+        "rev": "0cb020c038f6ee6351f0dd350b1453f7f4dabe05",
         "type": "github"
       },
       "original": {

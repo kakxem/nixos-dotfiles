@@ -6,6 +6,7 @@
   programs.nix-rebuild = {
     enable = true;
     checkout = "${config.home.homeDirectory}/.config/nixos-dotfiles";
+    trustFlakeConfig = true;
     system = {
       config = "system";
     };
