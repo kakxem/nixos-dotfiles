@@ -2,7 +2,13 @@
 #  Hyprland
 #
 
-{ config, pkgs, inputs, lib, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 
 lib.mkIf (config.desktop == "hyprland") {
   # Cachix
@@ -24,7 +30,6 @@ lib.mkIf (config.desktop == "hyprland") {
     systemPackages = with pkgs; [
       grim
       slurp
-      swappy
       xdg-desktop-portal
       wl-clipboard
       wlr-randr
@@ -56,14 +61,15 @@ lib.mkIf (config.desktop == "hyprland") {
         layout = "us"; # Keyboard layout
         options = "eurosign:e"; # €-sign
       };
-
-      displayManager.gdm.enable = true; # Display Manager
     };
+
+    displayManager.gdm.enable = true; # Display Manager
+    displayManager.defaultSession = "hyprland";
     udisks2.enable = true;
 
     dbus.implementation = "broker";
     dbus.packages = with pkgs; [
-      gcr
+      gcr_3
       gnome-settings-daemon
     ];
     udev.packages = with pkgs; [

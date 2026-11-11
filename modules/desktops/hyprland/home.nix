@@ -5,12 +5,24 @@
 {
   lib,
   pkgs,
-  user,
+  inputs,
+  palette,
+  palettes,
   ...
-  }:
+}:
 
 let
   lua = lib.generators.mkLuaInline;
+  # Palette color as Hyprland rgba(RRGGBBAA).
+  c = hex: alpha: "rgba(${lib.removePrefix "#" hex}${alpha})";
+  p = palettes.${palette};
+  # The session runs the flake's Hyprland, so plugins must be built against it.
+  hyprlandPkg = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+  # Niri-like scrolling overview, built against the pinned Hyprland.
+  scrolloverview = pkgs.callPackage ./plugins/scroll-overview.nix {
+    inherit (pkgs.hyprlandPlugins) mkHyprlandPlugin;
+    hyprland = hyprlandPkg;
+  };
   workspaceBinds = builtins.concatLists (
     builtins.genList (
       index:
@@ -32,8 +44,7 @@ let
           ];
         }
       ]
-    )
-    10
+    ) 10
   );
   hyprlandBinds = [
     {
@@ -80,14 +91,24 @@ let
     }
     {
       _args = [
-        "CTRL + SPACE"
-        (lua ''hl.dsp.exec_cmd("vicinae toggle")'')
+        "SUPER + SPACE"
+        (lua ''hl.dsp.exec_cmd("noctalia msg panel-toggle launcher")'')
       ];
     }
     {
       _args = [
         "SUPER + W"
         (lua ''hl.dsp.exec_cmd("firefox")'')
+      ];
+    }
+    {
+      _args = [
+        "SUPER + G"
+        (lua ''
+          function()
+            hl.plugin.scrolloverview.overview("toggle all")
+          end
+        '')
       ];
     }
     {
@@ -129,13 +150,13 @@ let
     {
       _args = [
         "SUPER + mouse_down"
-        (lua ''hl.dsp.layout("focus l")'')
+        (lua ''hl.dsp.layout("focus r")'')
       ];
     }
     {
       _args = [
         "SUPER + mouse_up"
-        (lua ''hl.dsp.layout("focus r")'')
+        (lua ''hl.dsp.layout("focus l")'')
       ];
     }
     {
@@ -167,9 +188,13 @@ let
     {
       _args = [
         "PRINT"
-        (lua ''
-          hl.dsp.exec_cmd([[sh -c 'filename="$HOME/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png"; grim -g "$(slurp)" - | swappy -f - -o "$filename" && notify-send "Saved to $filename"']])
-        '')
+        (lua ''hl.dsp.exec_cmd("screenshot-region")'')
+      ];
+    }
+    {
+      _args = [
+        "SHIFT + PRINT"
+        (lua ''hl.dsp.exec_cmd("screenshot-full")'')
       ];
     }
     {
@@ -186,6 +211,12 @@ let
         (lua ''
           hl.dsp.exec_cmd([[sh -c 'at="$(hyprctl activewindow | grep "^at:" | cut -d" " -f2)"; size="$(hyprctl activewindow | grep "^size:" | cut -d" " -f2)"; filename="$HOME/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png"; grim -g "$at $size" "$filename" && notify-send "Saved to $filename"']])
         '')
+      ];
+    }
+    {
+      _args = [
+        "XF86Tools"
+        (lua ''hl.dsp.exec_cmd("screenshot-ocr")'')
       ];
     }
     {
@@ -236,11 +267,15 @@ let
         (lua ''hl.dsp.exec_cmd("playerctl previous")'')
       ];
     }
-  ] ++ workspaceBinds;
+  ]
+  ++ workspaceBinds;
 
 in
 {
-  imports = [ ../../apps/home/noctalia.nix ];
+  imports = [
+    ../../apps/home/noctalia.nix
+    ../../apps/home/screenshots-wlr.nix
+  ];
 
   # Hyprland config
   wayland.windowManager.hyprland = {
@@ -248,6 +283,7 @@ in
     configType = "lua";
     package = null;
     portalPackage = null;
+    plugins = [ scrolloverview ];
     settings = {
       monitor = [
         {
@@ -255,16 +291,23 @@ in
           mode = "3840x2160@120";
           position = "auto";
           scale = "auto";
-          bitdepth = 10;
-          cm = "hdr";
-          supports_wide_color = 1;
-          supports_hdr = 1;
+          bitdepth = 8;
         }
       ];
 
       env = [
-        { _args = [ "XCURSOR_SIZE" "24" ]; }
-        { _args = [ "QT_QPA_PLATFORMTHEME" "qt5ct" ]; }
+        {
+          _args = [
+            "XCURSOR_SIZE"
+            "24"
+          ];
+        }
+        {
+          _args = [
+            "QT_QPA_PLATFORMTHEME"
+            "qt5ct"
+          ];
+        }
       ];
 
       on = {
@@ -272,12 +315,12 @@ in
           "hyprland.start"
           (lua ''
             function()
-              hl.exec_cmd("vicinae server")
-              hl.exec_cmd("brave-origin")
-              hl.exec_cmd("telegram-desktop")
-              hl.exec_cmd("vesktop")
-              hl.exec_cmd("configure-gtk")
+              hl.exec_cmd("waycorner")
               hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+              -- systemd generates app-*@autostart units from ~/.config/autostart;
+              -- the target is what starts them, as in Umbriel.
+              hl.exec_cmd("systemctl --user start xdg-desktop-autostart.target")
+              hl.exec_cmd("configure-gtk")
             end
           '')
         ];
@@ -290,8 +333,14 @@ in
             {
               type = "bezier";
               points = [
-                [ 0.05 0.9 ]
-                [ 0.1 1.05 ]
+                [
+                  0.05
+                  0.9
+                ]
+                [
+                  0.1
+                  1.05
+                ]
               ];
             }
           ];
@@ -299,18 +348,52 @@ in
       ];
 
       animation = [
-        { leaf = "windows"; enabled = true; speed = 7; bezier = "myBezier"; }
-        { leaf = "windowsOut"; enabled = true; speed = 7; bezier = "default"; style = "popin 80%"; }
-        { leaf = "border"; enabled = true; speed = 10; bezier = "default"; }
-        { leaf = "borderangle"; enabled = true; speed = 8; bezier = "default"; }
-        { leaf = "fade"; enabled = true; speed = 7; bezier = "default"; }
-        { leaf = "workspaces"; enabled = true; speed = 6; bezier = "default"; }
+        {
+          leaf = "windows";
+          enabled = true;
+          speed = 7;
+          bezier = "myBezier";
+        }
+        {
+          leaf = "windowsOut";
+          enabled = true;
+          speed = 7;
+          bezier = "default";
+          style = "popin 80%";
+        }
+        {
+          leaf = "border";
+          enabled = true;
+          speed = 10;
+          bezier = "default";
+        }
+        {
+          leaf = "borderangle";
+          enabled = true;
+          speed = 8;
+          bezier = "default";
+        }
+        {
+          leaf = "fade";
+          enabled = true;
+          speed = 7;
+          bezier = "default";
+        }
+        {
+          leaf = "workspaces";
+          enabled = true;
+          speed = 6;
+          bezier = "default";
+        }
       ];
 
       config = {
         input = {
           kb_layout = "us";
-          follow_mouse = 0;
+          # Focus follows the pointer, like niri, without re-focusing after a
+          # keyboard focus change.
+          follow_mouse = 1;
+          mouse_refocus = false;
           accel_profile = "flat";
           sensitivity = 0;
           touchpad = {
@@ -323,8 +406,8 @@ in
           gaps_out = 4;
           border_size = 2;
           col = {
-            active_border = "rgb(ffb1c8)";
-            inactive_border = "rgba(00000000)";
+            active_border = c p.accent "ff";
+            inactive_border = c p.comment "44";
           };
           layout = "scrolling";
         };
@@ -348,22 +431,54 @@ in
         misc = {
           focus_on_activate = true;
         };
+        plugin.scrolloverview = {
+          # wallpaper != 0 draws layer surfaces through the plugin and crashes
+          # Hyprland with Noctalia's wallpaper (upstream #94).
+          wallpaper = 0;
+          blur = false;
+          gesture_distance = 300;
+          scale = 0.5;
+          workspace_gap = 100;
+          layout = "auto";
+          shadow = {
+            enabled = true;
+            range = 50;
+          };
+        };
       };
 
       bind = hyprlandBinds;
-      };
     };
+
+    # Hyprland workspaces only exist once created, and an empty one dies when you
+    # leave it. Persistent rules keep 1-9 alive so the overview can show them and
+    # accept drops.
+    extraLuaFiles."workspaces" = lib.concatMapStringsSep "\n" (
+      i: ''hl.workspace_rule({ workspace = "${toString i}", persistent = true })''
+    ) (lib.range 1 9);
+  };
 
   # Home packages
   home.packages = with pkgs; [
     # QT theme manager
     libsForQt5.qt5ct
     kdePackages.breeze
-    vicinae
 
     # USB mount
     udiskie
+
+    # Hot corners: enters the corner, toggles the overview
+    waycorner
   ];
+
+  # Hot corner in the top-left of every output
+  xdg.configFile."waycorner/config.toml".text = ''
+    [overview]
+    enter_command = [ "hyprctl", "dispatch", "hl.plugin.scrolloverview.overview(\"toggle all\")" ]
+    locations = [ "top_left" ]
+    size = 8
+    timeout_ms = 0
+  '';
 
   # Color schema
   dconf = {
@@ -388,25 +503,8 @@ in
     size = 16;
   };
 
-  # GTK theme
-  gtk = {
-    enable = true;
-    gtk4.theme = null;
-    theme = {
-      package = pkgs.adw-gtk3;
-      name = "adw-gtk3-dark";
-    };
-
-    iconTheme = {
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
-    };
-
-    font = {
-      name = "Sans";
-      size = 11;
-    };
-  };
+  # GTK styling comes from modules/config/theming/home.nix; defining it here
+  # collides with that module (gtk.iconTheme.name).
 
   # QT theme
   nixpkgs.config.qt5 = {
