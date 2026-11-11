@@ -38,21 +38,6 @@ in
     };
   };
 
-  programs.vicinae = {
-    enable = true;
-    systemd = {
-      enable = true;
-      autoStart = true;
-      environment = {
-        USE_LAYER_SHELL = 1;
-      };
-    };
-    extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
-      nix
-      niri
-    ];
-  };
-
   home.packages = with pkgs; [
     kdePackages."kdeconnect-kde"
     loupe
@@ -105,8 +90,10 @@ in
     "Mod+Space" = {
       hotkey-overlay.title = "Launcher";
       action.spawn = [
-        "vicinae"
-        "toggle"
+        "noctalia"
+        "msg"
+        "panel-toggle"
+        "launcher"
       ];
     };
 

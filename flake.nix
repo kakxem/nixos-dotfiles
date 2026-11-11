@@ -14,9 +14,6 @@
       # Niri
       "https://niri.cachix.org"
 
-      # Vicinae
-      "https://vicinae.cachix.org"
-
       # Numtide
       "https://cache.numtide.com"
 
@@ -32,9 +29,6 @@
 
       # Niri
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
-
-      # Vicinae
-      "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
 
       # Numtide
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
@@ -72,12 +66,6 @@
     # Niri
     niri = {
       url = "github:epireyn/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    vicinae.url = "github:vicinaehq/vicinae";
-    vicinae-extensions = {
-      url = "github:vicinaehq/extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -140,22 +128,21 @@
                 substituters = [
                   "https://cache.nixos.org"
                   "https://noctalia.cachix.org"
-                  "https://vicinae.cachix.org"
                   "https://cache.numtide.com"
+                  "https://niri.cachix.org"
                 ];
 
                 trusted-public-keys = [
                   # the default public key of cache.nixos.org, it's built-in, no need to add it here
                   "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
                   "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
-                  "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
                   "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+                  "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
                 ];
               };
             }
 
             # Import configuration
-            inputs.vicinae.nixosModules.default
             ./core/system.nix
           ];
         };
@@ -176,7 +163,6 @@
           }
           // vars;
           modules = [
-            inputs.vicinae.homeManagerModules.default
             inputs.plasma-manager.homeModules.plasma-manager
             ./core/home.nix
           ];
