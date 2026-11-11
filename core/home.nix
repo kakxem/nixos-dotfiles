@@ -14,6 +14,7 @@ let
     hyprland = [ ../modules/desktops/hyprland/home.nix ];
     kde = [ ../modules/desktops/kde/home.nix ];
     niri = [ ../modules/desktops/niri/home.nix ];
+    umbriel = [ ../modules/desktops/umbriel/home.nix ];
   };
 in
 {

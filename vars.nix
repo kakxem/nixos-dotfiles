@@ -7,7 +7,7 @@
 
   # System Settings
   system = "x86_64-linux";
-  desktop = "niri"; # Possible options: "gnome", "hyprland", "kde", "niri"
+  desktop = "niri"; # Possible options: "gnome", "hyprland", "kde", "niri", "umbriel"
   gpu = "amd"; # Possible options: "amd", "nvidia", "nvidia-open", "intel", "none"
 
   # Color palette (see theme/palettes.nix)
